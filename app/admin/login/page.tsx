@@ -1,0 +1,2 @@
+import {signIn} from "@/auth";
+export default function Login(){const ready=!!(process.env.AUTH_SECRET&&process.env.AUTH_GOOGLE_ID&&process.env.AUTH_GOOGLE_SECRET);async function login(){"use server";await signIn("google",{redirectTo:"/admin"})}return <div className="login"><h1>딴짓모아 관리자</h1>{ready?<form action={login}><button className="primary">Google 계정으로 로그인</button></form>:<p>Google OAuth 환경변수 연결 전입니다. 공개 게임 사이트는 정상 운영됩니다.</p>}</div>}

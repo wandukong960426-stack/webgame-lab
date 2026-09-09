@@ -1,0 +1,3 @@
+import Link from "next/link";import {games} from "@/lib/db";
+export const revalidate=60;
+export default async function Home(){const list=await games();return <><section className="hero"><span>무료 브라우저 게임</span><h1>해야 할 일은 잠깐.<br/><em>딴짓은 지금.</em></h1><p>설치도 회원가입도 필요 없습니다. 들어오자마자 바로 한 판.</p><Link className="primary" href="/games/omok">오목 바로 시작</Link></section><section className="wrap"><h2>바로 할 수 있는 게임</h2><div className="grid">{list.map(g=><Link className="card" key={g.id} href={`/games/${g.slug}`}><div className="thumb">{g.engine_key==="omok"?"●○":"🎮"}</div><h3>{g.title}</h3><p>{g.short_description}</p><b>지금 플레이 →</b></Link>)}</div></section></>}
