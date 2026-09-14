@@ -1,0 +1,77 @@
+name: Production smoke test
+
+on:
+  push:
+    branches:
+      - main
+      - chore/production-smoke
+  workflow_dispatch:
+  schedule:
+    - cron: "17 0 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-smoke
+  cancel-in-progress: true
+
+jobs:
+  verify-production:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BASE_URL: https://ttanjitmoa.com
+    steps:
+      - name: Verify production pages, games, and SEO endpoints
+        shell: bash
+        run: |
+          set -uo pipefail
+
+          routes=(
+            "/"
+            "/games"
+            "/games/omok"
+            "/games/othello"
+            "/games/2048"
+            "/games/tic-tac-toe"
+            "/games/chess"
+            "/games/janggi"
+            "/robots.txt"
+            "/sitemap.xml"
+          )
+
+          for attempt in $(seq 1 24); do
+            failed=0
+            echo "Smoke attempt ${attempt}/24"
+
+            for route in "${routes[@]}"; do
+              output="/tmp$(echo "$route" | tr '/' '_')"
+              code=$(curl --compressed --location --silent --show-error \
+                --connect-timeout 10 --max-time 30 \
+                --output "$output" --write-out "%{http_code}" \
+                "${BASE_URL}${route}?smoke=${GITHUB_RUN_ID}-${attempt}" || true)
+
+              if [[ "$code" != "200" ]]; then
+                echo "${route}: HTTP ${code:-request-failed}"
+                failed=1
+                break
+              fi
+
+              echo "${route}: HTTP 200"
+            done
+
+            if [[ "$failed" -eq 0 ]]; then
+              grep -Fq "딴짓은 지금" /tmp_
+              grep -Fq "틱택토+" /tmp_games
+              grep -Fq "/games/chess" /tmp_sitemap.xml
+              grep -Fq "Sitemap:" /tmp_robots.txt
+              echo "Production smoke test passed."
+              exit 0
+            fi
+
+            sleep 15
+          done
+
+          echo "Production did not become healthy within the retry window."
+          exit 1
