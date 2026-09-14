@@ -1,4 +1,4 @@
-name: Production smoke test
+name: Production smoke test v2
 
 on:
   push:
@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: production-smoke
+  group: production-smoke-v2-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
