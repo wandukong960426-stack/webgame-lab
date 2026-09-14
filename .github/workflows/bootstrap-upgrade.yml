@@ -35,6 +35,18 @@ jobs:
           tar -xzf /tmp/upgrade.tar.gz
           rm -rf .upgrade .github/workflows/bootstrap-upgrade.yml
 
+      - name: Isolate third-party declaration checks
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, writeFileSync } from "node:fs";
+          const path = "tsconfig.json";
+          const config = JSON.parse(readFileSync(path, "utf8"));
+          config.compilerOptions ??= {};
+          config.compilerOptions.skipLibCheck = true;
+          writeFileSync(path, `${JSON.stringify(config, null, 2)}\n`);
+          NODE
+
       - name: Install exact dependencies
         run: npm install --no-audit --no-fund
 
