@@ -1,3 +1,60 @@
-import {auth,isAdmin,signOut} from "@/auth";import {games,saveGame} from "@/lib/db";import {redirect} from "next/navigation";import {revalidatePath} from "next/cache";
-export const dynamic="force-dynamic";
-export default async function Admin(){if(!process.env.AUTH_SECRET)redirect("/admin/login");const s=await auth();if(!isAdmin(s?.user?.email))redirect("/admin/login");const list=await games(true);async function save(fd:FormData){"use server";const s=await auth();if(!isAdmin(s?.user?.email))throw new Error("Unauthorized");await saveGame(fd);revalidatePath("/");revalidatePath("/admin")}async function logout(){"use server";await signOut({redirectTo:"/admin/login"})}return <div className="admin"><div className="adminhead"><h1>마스터 페이지</h1><form action={logout}><button>로그아웃</button></form></div>{list.map(g=><form action={save} className="editor" key={g.id}><input type="hidden" name="id" value={g.id}/><label>제목<input name="title" defaultValue={g.title}/></label><label>카드 설명<input name="short_description" defaultValue={g.short_description}/></label><label>상세 설명<textarea name="description" defaultValue={g.description}/></label><label>SEO 제목<input name="seo_title" defaultValue={g.seo_title}/></label><label>SEO 설명<input name="seo_description" defaultValue={g.seo_description}/></label><label>순서<input type="number" name="sort_order" defaultValue={g.sort_order}/></label><label>상태<select name="status" defaultValue={g.status}><option value="published">공개</option><option value="draft">초안</option></select></label><label className="check"><input type="checkbox" name="featured" defaultChecked={g.featured}/> 추천</label><button className="primary">저장</button></form>)}</div>}
+import { auth, isAdmin, signOut } from "@/auth";
+import { games, saveGame } from "@/lib/db";
+import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
+
+export const dynamic = "force-dynamic";
+
+export default async function Admin() {
+  if (!process.env.AUTH_SECRET) redirect("/admin/login");
+  const session = await auth();
+  if (!isAdmin(session?.user?.email)) redirect("/admin/login");
+  const list = await games(true);
+
+  async function save(formData: FormData) {
+    "use server";
+    const currentSession = await auth();
+    if (!isAdmin(currentSession?.user?.email)) throw new Error("Unauthorized");
+    await saveGame(formData);
+    revalidatePath("/");
+    revalidatePath("/games");
+    revalidatePath("/admin");
+  }
+
+  async function logout() {
+    "use server";
+    await signOut({ redirectTo: "/admin/login" });
+  }
+
+  return (
+    <div className="admin">
+      <div className="adminhead">
+        <div>
+          <p className="eyebrow">DDANJITMOA CMS</p>
+          <h1>게임 콘텐츠 관리</h1>
+        </div>
+        <form action={logout}><button type="submit">로그아웃</button></form>
+      </div>
+      <p>게임 실행 코드는 GitHub에서 관리하고, 이 화면에서는 카드 문구·공개 상태·정렬·SEO 문구를 수정합니다.</p>
+      {list.map((game) => (
+        <form action={save} className="editor" key={game.id}>
+          <input type="hidden" name="id" value={game.id} />
+          <label>제목<input name="title" defaultValue={game.title} /></label>
+          <label>카드 설명<input name="short_description" defaultValue={game.short_description} /></label>
+          <label>상세 설명<textarea name="description" defaultValue={game.description} /></label>
+          <label>SEO 제목<input name="seo_title" defaultValue={game.seo_title} /></label>
+          <label>SEO 설명<input name="seo_description" defaultValue={game.seo_description} /></label>
+          <label>순서<input type="number" name="sort_order" defaultValue={game.sort_order} /></label>
+          <label>상태
+            <select name="status" defaultValue={game.status}>
+              <option value="published">공개</option>
+              <option value="draft">초안</option>
+            </select>
+          </label>
+          <label className="check"><input type="checkbox" name="featured" defaultChecked={game.featured} /> 추천</label>
+          <button type="submit" className="primary">저장</button>
+        </form>
+      ))}
+    </div>
+  );
+}
