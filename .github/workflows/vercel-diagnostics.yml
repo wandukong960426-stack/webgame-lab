@@ -1,0 +1,62 @@
+name: Vercel production diagnostics
+
+on:
+  push:
+    branches:
+      - chore/production-smoke
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      BASE_URL: https://ttanjitmoa.com
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - name: Inspect domain, production responses, and deploy credentials
+        shell: bash
+        run: |
+          set -uo pipefail
+
+          for key in VERCEL_TOKEN VERCEL_ORG_ID VERCEL_PROJECT_ID; do
+            if [[ -n "${!key:-}" ]]; then
+              echo "${key}: configured"
+            else
+              echo "${key}: missing"
+            fi
+          done
+
+          echo "--- DNS CNAME ---"
+          dig +short CNAME ttanjitmoa.com || true
+          echo "--- DNS A/AAAA ---"
+          dig +short A ttanjitmoa.com || true
+          dig +short AAAA ttanjitmoa.com || true
+
+          echo "--- Production headers ---"
+          curl --compressed --location --silent --show-error \
+            --connect-timeout 5 --max-time 20 \
+            --dump-header /tmp/headers.txt --output /tmp/home.html \
+            "${BASE_URL}/?diagnostic=${GITHUB_RUN_ID}" || true
+          sed -n '1,40p' /tmp/headers.txt 2>/dev/null || true
+
+          echo "--- Page title and game links ---"
+          grep -oE '<title>[^<]+' /tmp/home.html 2>/dev/null | head -5 || true
+          grep -oE 'href="/games/[^"]+' /tmp/home.html 2>/dev/null | sort -u | head -30 || true
+
+          echo "--- Route matrix ---"
+          for route in \
+            / /games /games/omok /games/othello /games/2048 \
+            /games/tic-tac-toe /games/tictactoe /games/chess /games/janggi \
+            /robots.txt /sitemap.xml; do
+            code=$(curl --compressed --location --silent --show-error \
+              --connect-timeout 5 --max-time 15 \
+              --output /dev/null --write-out "%{http_code}" \
+              "${BASE_URL}${route}?diagnostic=${GITHUB_RUN_ID}" || true)
+            echo "${route}: ${code:-request-failed}"
+          done

@@ -47,7 +47,7 @@ jobs:
             echo "Smoke attempt ${attempt}/8"
 
             for route in "${routes[@]}"; do
-              output="/tmp$(echo "$route" | tr '/' '_')"
+              output="/tmp/smoke$(echo "$route" | tr '/' '_')"
               code=$(curl --compressed --location --silent --show-error \
                 --connect-timeout 5 --max-time 15 \
                 --output "$output" --write-out "%{http_code}" \
@@ -75,9 +75,9 @@ jobs:
             exit 1
           fi
 
-          grep -Fq "딴짓은 지금" /tmp_ || { echo "Home page is not the new release."; exit 1; }
-          grep -Fq "틱택토+" /tmp_games || { echo "Game catalog is incomplete."; exit 1; }
-          grep -Fq "/games/chess" /tmp_sitemap.xml || { echo "Sitemap is missing chess."; exit 1; }
-          grep -Fq "Sitemap:" /tmp_robots.txt || { echo "robots.txt is missing the sitemap directive."; exit 1; }
+          grep -Fq "딴짓은 지금" /tmp/smoke_ || { echo "Home page is not the new release."; exit 1; }
+          grep -Fq "틱택토+" /tmp/smoke_games || { echo "Game catalog is incomplete."; exit 1; }
+          grep -Fq "/games/chess" /tmp/smoke_sitemap.xml || { echo "Sitemap is missing chess."; exit 1; }
+          grep -Fq "Sitemap:" /tmp/smoke_robots.txt || { echo "robots.txt is missing the sitemap directive."; exit 1; }
 
           echo "Production smoke test passed."
