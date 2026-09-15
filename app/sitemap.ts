@@ -1,21 +1,25 @@
 import type { MetadataRoute } from "next";
-import { gamesCatalog, SITE_URL } from "@/lib/game-catalog";
+import { gamesCatalog } from "@/lib/game-catalog";
+import { SITE_URL } from "@/lib/site-config";
+
+const staticPages = [
+  { path: "", priority: 1, changeFrequency: "weekly" as const },
+  { path: "/games", priority: 0.9, changeFrequency: "weekly" as const },
+  { path: "/about", priority: 0.5, changeFrequency: "monthly" as const },
+  { path: "/contact", priority: 0.5, changeFrequency: "monthly" as const },
+  { path: "/privacy", priority: 0.4, changeFrequency: "monthly" as const },
+  { path: "/terms", priority: 0.4, changeFrequency: "monthly" as const },
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   return [
-    {
-      url: SITE_URL,
+    ...staticPages.map((page) => ({
+      url: `${SITE_URL}${page.path}`,
       lastModified: now,
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: `${SITE_URL}/games`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
+      changeFrequency: page.changeFrequency,
+      priority: page.priority,
+    })),
     ...gamesCatalog.map((game) => ({
       url: `${SITE_URL}/games/${game.slug}`,
       lastModified: now,

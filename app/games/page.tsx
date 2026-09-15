@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { gamesCatalog, SITE_URL } from "@/lib/game-catalog";
+import { gamesCatalog } from "@/lib/game-catalog";
+import { SITE_URL } from "@/lib/site-config";
 import { games as getEditableGames } from "@/lib/db";
 
 export const metadata: Metadata = {
