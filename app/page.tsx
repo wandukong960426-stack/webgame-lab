@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ContinuePlaying from "@/components/ContinuePlaying";
 import { gamesCatalog } from "@/lib/game-catalog";
 import { games as getEditableGames } from "@/lib/db";
 
@@ -9,7 +10,14 @@ export default async function Home() {
   const overrides = new Map(editableGames.map((game) => [game.slug, game]));
   const catalog = gamesCatalog.map((game) => {
     const override = overrides.get(game.slug);
-    return override ? { ...game, title: override.title || game.title, description: override.short_description || game.description, featured: override.featured } : game;
+    return override
+      ? {
+          ...game,
+          title: override.title || game.title,
+          description: override.short_description || game.description,
+          featured: override.featured,
+        }
+      : game;
   });
   const featured = catalog.filter((game) => game.featured);
 
@@ -58,6 +66,8 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <ContinuePlaying />
 
       <section className="content-section" aria-labelledby="featured-title">
         <div className="section-heading">
