@@ -2,24 +2,35 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import GameShell, { useGameAudio } from "@/components/GameShell";
+import {
+  clearGameProgress,
+  loadGameProgress,
+  saveGameProgress,
+} from "@/lib/game-progress";
 import { trackGameEvent } from "@/lib/telemetry";
 
 type Stone = 0 | 1 | 2;
+type PlayerStone = 1 | 2;
 type Winner = Stone | "draw";
 type Mode = "ai" | "2p";
 type Point = { row: number; col: number };
 type Snapshot = {
   board: Stone[][];
-  turn: Stone;
+  turn: PlayerStone;
   winner: Winner;
   lastMove: Point | null;
   winningLine: Point[];
+};
+type SavedOmokState = Snapshot & {
+  mode: Mode;
+  history: Snapshot[];
 };
 
 const SIZE = 15;
 const CANVAS = 680;
 const PADDING = 38;
 const GAP = (CANVAS - PADDING * 2) / (SIZE - 1);
+const MAX_SAVED_HISTORY = 60;
 const directions = [
   [1, 0],
   [0, 1],
@@ -32,6 +43,89 @@ const emptyBoard = (): Stone[][] =>
 
 function cloneBoard(board: Stone[][]) {
   return board.map((row) => row.slice()) as Stone[][];
+}
+
+function clonePoint(point: Point | null) {
+  return point ? { row: point.row, col: point.col } : null;
+}
+
+function cloneSnapshot(snapshot: Snapshot): Snapshot {
+  return {
+    board: cloneBoard(snapshot.board),
+    turn: snapshot.turn,
+    winner: snapshot.winner,
+    lastMove: clonePoint(snapshot.lastMove),
+    winningLine: snapshot.winningLine.map((point) => ({ ...point })),
+  };
+}
+
+function isStone(value: unknown): value is Stone {
+  return value === 0 || value === 1 || value === 2;
+}
+
+function isPlayerStone(value: unknown): value is PlayerStone {
+  return value === 1 || value === 2;
+}
+
+function isWinner(value: unknown): value is Winner {
+  return isStone(value) || value === "draw";
+}
+
+function isMode(value: unknown): value is Mode {
+  return value === "ai" || value === "2p";
+}
+
+function isPoint(value: unknown): value is Point {
+  if (!value || typeof value !== "object") return false;
+  const point = value as Partial<Point>;
+  return (
+    Number.isInteger(point.row) &&
+    Number.isInteger(point.col) &&
+    Number(point.row) >= 0 &&
+    Number(point.row) < SIZE &&
+    Number(point.col) >= 0 &&
+    Number(point.col) < SIZE
+  );
+}
+
+function isPointList(value: unknown): value is Point[] {
+  return Array.isArray(value) && value.length <= SIZE * SIZE && value.every(isPoint);
+}
+
+function isBoard(value: unknown): value is Stone[][] {
+  return (
+    Array.isArray(value) &&
+    value.length === SIZE &&
+    value.every(
+      (row) =>
+        Array.isArray(row) &&
+        row.length === SIZE &&
+        row.every(isStone),
+    )
+  );
+}
+
+function isSnapshot(value: unknown): value is Snapshot {
+  if (!value || typeof value !== "object") return false;
+  const snapshot = value as Partial<Snapshot>;
+  return (
+    isBoard(snapshot.board) &&
+    isPlayerStone(snapshot.turn) &&
+    isWinner(snapshot.winner) &&
+    (snapshot.lastMove === null || isPoint(snapshot.lastMove)) &&
+    isPointList(snapshot.winningLine)
+  );
+}
+
+function isSavedOmokState(value: unknown): value is SavedOmokState {
+  if (!value || typeof value !== "object" || !isSnapshot(value)) return false;
+  const state = value as Partial<SavedOmokState>;
+  return (
+    isMode(state.mode) &&
+    Array.isArray(state.history) &&
+    state.history.length <= SIZE * SIZE &&
+    state.history.every(isSnapshot)
+  );
 }
 
 function getWinningLine(board: Stone[][], row: number, col: number, stone: Stone): Point[] {
@@ -255,19 +349,54 @@ function OmokBoard({
 export default function OmokPage() {
   const { play } = useGameAudio();
   const [board, setBoard] = useState<Stone[][]>(emptyBoard);
-  const [turn, setTurn] = useState<Stone>(1);
+  const [turn, setTurn] = useState<PlayerStone>(1);
   const [mode, setMode] = useState<Mode>("ai");
   const [winner, setWinner] = useState<Winner>(0);
   const [lastMove, setLastMove] = useState<Point | null>(null);
   const [winningLine, setWinningLine] = useState<Point[]>([]);
   const [history, setHistory] = useState<Snapshot[]>([]);
+  const [hydrated, setHydrated] = useState(false);
 
   const stones = useMemo(
     () => board.reduce((total, row) => total + row.filter(Boolean).length, 0),
     [board],
   );
 
+  useEffect(() => {
+    const saved = loadGameProgress<unknown>("omok");
+    if (saved && isSavedOmokState(saved.state) && saved.state.winner === 0) {
+      const restoredStones = saved.state.board.reduce(
+        (total, row) => total + row.filter(Boolean).length,
+        0,
+      );
+
+      if (restoredStones > 0) {
+        setBoard(cloneBoard(saved.state.board));
+        setTurn(saved.state.turn);
+        setMode(saved.state.mode);
+        setWinner(0);
+        setLastMove(clonePoint(saved.state.lastMove));
+        setWinningLine(saved.state.winningLine.map((point) => ({ ...point })));
+        setHistory(
+          saved.state.history
+            .slice(-MAX_SAVED_HISTORY)
+            .map(cloneSnapshot),
+        );
+        trackGameEvent("game_resume", "omok", {
+          mode: saved.state.mode,
+          moves: restoredStones,
+        });
+      } else {
+        clearGameProgress("omok");
+      }
+    } else if (saved) {
+      clearGameProgress("omok");
+    }
+    setHydrated(true);
+  }, []);
+
   const reset = useCallback((nextMode = mode) => {
+    clearGameProgress("omok");
     setBoard(emptyBoard());
     setTurn(1);
     setWinner(0);
@@ -277,9 +406,9 @@ export default function OmokPage() {
     trackGameEvent("game_restart", "omok", { mode: nextMode });
   }, [mode]);
 
-  const commitMove = useCallback((row: number, col: number, stone: Stone) => {
+  const commitMove = useCallback((row: number, col: number, stone: PlayerStone) => {
     setBoard((current) => {
-      if (!stone || current[row][col] || winner) return current;
+      if (current[row][col] || winner) return current;
       const next = cloneBoard(current);
       next[row][col] = stone;
       const line = getWinningLine(next, row, col, stone);
@@ -287,7 +416,13 @@ export default function OmokPage() {
 
       setHistory((items) => [
         ...items,
-        { board: cloneBoard(current), turn, winner, lastMove, winningLine },
+        {
+          board: cloneBoard(current),
+          turn,
+          winner,
+          lastMove: clonePoint(lastMove),
+          winningLine: winningLine.map((point) => ({ ...point })),
+        },
       ]);
       setLastMove({ row, col });
       play(line.length ? "win" : "move");
@@ -311,13 +446,40 @@ export default function OmokPage() {
   }, [lastMove, mode, play, stones, turn, winner, winningLine]);
 
   useEffect(() => {
-    if (mode !== "ai" || turn !== 2 || winner) return;
+    if (!hydrated || mode !== "ai" || turn !== 2 || winner) return;
     const timer = window.setTimeout(() => {
       const move = chooseAiMove(board);
       if (move) commitMove(move.row, move.col, 2);
     }, 320);
     return () => window.clearTimeout(timer);
-  }, [board, commitMove, mode, turn, winner]);
+  }, [board, commitMove, hydrated, mode, turn, winner]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    if (winner || stones === 0) {
+      clearGameProgress("omok");
+      return;
+    }
+
+    saveGameProgress<SavedOmokState>({
+      slug: "omok",
+      title: "오목",
+      theme: "wood",
+      symbol: "● ○",
+      summary: `${mode === "ai" ? "AI 대전" : "2인 대전"} · ${stones}수 · ${turn === 1 ? "흑" : mode === "ai" ? "컴퓨터" : "백"} 차례`,
+      state: {
+        board: cloneBoard(board),
+        turn,
+        mode,
+        winner,
+        lastMove: clonePoint(lastMove),
+        winningLine: winningLine.map((point) => ({ ...point })),
+        history: history
+          .slice(-MAX_SAVED_HISTORY)
+          .map(cloneSnapshot),
+      },
+    });
+  }, [board, history, hydrated, lastMove, mode, stones, turn, winner, winningLine]);
 
   const undo = () => {
     if (!history.length) return;
@@ -327,8 +489,8 @@ export default function OmokPage() {
     setBoard(cloneBoard(snapshot.board));
     setTurn(snapshot.turn);
     setWinner(snapshot.winner);
-    setLastMove(snapshot.lastMove);
-    setWinningLine(snapshot.winningLine);
+    setLastMove(clonePoint(snapshot.lastMove));
+    setWinningLine(snapshot.winningLine.map((point) => ({ ...point })));
     setHistory((items) => items.slice(0, targetIndex));
     play("select");
   };
@@ -341,7 +503,7 @@ export default function OmokPage() {
         ? mode === "ai" ? "컴퓨터가 다섯 줄을 완성했습니다." : "백이 다섯 줄을 완성했습니다!"
         : mode === "ai" && turn === 2
           ? "컴퓨터가 수를 읽는 중…"
-          : `${turn === 1 ? "흑" : "백"} 차례입니다.`;
+          : `${turn === 1 ? "흑" : "백"} 차례입니다.${hydrated && stones > 0 ? " 진행 상황은 자동 저장됩니다." : ""}`;
 
   return (
     <GameShell
