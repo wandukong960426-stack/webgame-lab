@@ -1,0 +1,209 @@
+.resume-section {
+  position: relative;
+  z-index: 3;
+  max-width: 1180px;
+  margin: -34px auto 0;
+  padding: 0 24px 22px;
+}
+
+.resume-panel {
+  overflow: hidden;
+  border: 1px solid rgba(30, 45, 31, 0.12);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 92% -30%, rgba(169, 231, 121, 0.32), transparent 34%),
+    #f8fbf5;
+  padding: 24px;
+  box-shadow: 0 18px 50px rgba(34, 58, 36, 0.12);
+}
+
+.resume-panel__heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+
+.resume-panel__heading h2 {
+  margin: 2px 0 0;
+  font-size: clamp(25px, 3.2vw, 38px);
+  letter-spacing: -0.05em;
+}
+
+.resume-panel__heading > span {
+  max-width: 340px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.resume-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.resume-card {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(22, 35, 24, 0.1);
+  border-radius: 18px;
+  background: #fff;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.resume-card:hover,
+.resume-card:focus-within {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(25, 43, 28, 0.12);
+}
+
+.resume-card__link {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 13px;
+  min-height: 104px;
+  padding: 14px 15px 31px;
+}
+
+.resume-card__link:focus-visible {
+  border-radius: 18px;
+  outline: 3px solid rgba(73, 142, 62, 0.35);
+  outline-offset: -3px;
+}
+
+.resume-card__symbol {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border-radius: 16px;
+  background: #1c1c34;
+  color: #c8ff5b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+  font-weight: 950;
+  letter-spacing: -0.08em;
+}
+
+.resume-card--wood .resume-card__symbol { background: #d9a35f; color: #24170d; }
+.resume-card--forest .resume-card__symbol { background: #235f40; color: #f1f5dc; }
+.resume-card--neon .resume-card__symbol { background: #1c1c34; color: #c8ff5b; }
+.resume-card--berry .resume-card__symbol { background: #ee6e8d; color: #4b1630; }
+.resume-card--royal .resume-card__symbol { background: #283559; color: #f4dfad; }
+.resume-card--ink .resume-card__symbol { background: #e9d9bd; color: #412e24; }
+
+.resume-card__copy {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.resume-card__copy small {
+  color: var(--pea-dark);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.resume-card__copy strong {
+  overflow: hidden;
+  font-size: 19px;
+  letter-spacing: -0.03em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resume-card__copy > span {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resume-card__link > b {
+  color: var(--pea-dark);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.resume-card__clear {
+  position: absolute;
+  right: 14px;
+  bottom: 8px;
+  border: 0;
+  background: transparent;
+  padding: 3px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 750;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+}
+
+.resume-card__clear:hover,
+.resume-card__clear:focus-visible {
+  color: var(--ink);
+  text-decoration-color: currentColor;
+  outline: none;
+}
+
+@media (max-width: 980px) {
+  .resume-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .resume-section {
+    margin-top: -28px;
+    padding: 0 12px 6px;
+  }
+
+  .resume-panel {
+    border-radius: 22px;
+    padding: 18px 12px 12px;
+  }
+
+  .resume-panel__heading {
+    align-items: start;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0 4px;
+  }
+
+  .resume-panel__heading > span {
+    max-width: none;
+    text-align: left;
+  }
+
+  .resume-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-card__link {
+    grid-template-columns: 52px minmax(0, 1fr) auto;
+    min-height: 92px;
+    padding: 12px 12px 29px;
+  }
+
+  .resume-card__symbol {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    font-size: 19px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resume-card {
+    transition: none;
+  }
+}
