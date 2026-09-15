@@ -16,11 +16,9 @@ function resolveSiteUrl() {
     );
   }
 
-  const isLocalDevelopment =
-    process.env.NODE_ENV !== "production" &&
-    (url.hostname === "localhost" || url.hostname === "127.0.0.1");
-
-  if (isLocalDevelopment) return url.origin;
+  const isLocalHost = url.hostname === "localhost" || url.hostname === "127.0.0.1";
+  const isLocalBuild = isLocalHost && process.env.VERCEL !== "1";
+  if (isLocalBuild) return url.origin;
 
   if (url.protocol !== "https:") {
     throw new Error("NEXT_PUBLIC_SITE_URL must use HTTPS outside local development.");
@@ -40,7 +38,7 @@ function resolveSiteUrl() {
  * Canonical origin used by metadata, sitemap and robots.
  *
  * Missing configuration is intentionally safe: it resolves to the official domain.
- * A conflicting production value fails the build instead of silently publishing
+ * A conflicting hosted value fails the build instead of silently publishing
  * canonical URLs for a Vercel preview or an obsolete host.
  */
 export const SITE_URL = resolveSiteUrl();
