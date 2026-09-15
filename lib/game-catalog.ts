@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site-config";
 
 export type GameSlug =
   | "omok"
@@ -23,12 +24,6 @@ export type GameInfo = {
   featured?: boolean;
   keywords: string[];
 };
-
-const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-export const SITE_URL =
-  rawSiteUrl && /^https?:\/\//.test(rawSiteUrl)
-    ? rawSiteUrl.replace(/\/$/, "")
-    : "https://webgame-lab.vercel.app";
 
 export const gamesCatalog: GameInfo[] = [
   {
