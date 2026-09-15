@@ -8,7 +8,6 @@ import {
   listGameProgress,
   type GameProgressMeta,
 } from "@/lib/game-progress";
-import { trackGameEvent } from "@/lib/telemetry";
 
 function relativeTime(timestamp: number) {
   const elapsed = Math.max(0, Date.now() - timestamp);
@@ -57,11 +56,7 @@ export default function ContinuePlaying() {
         <div className="resume-grid">
           {items.map((item) => (
             <article className={`resume-card resume-card--${item.theme}`} key={item.slug}>
-              <Link
-                className="resume-card__link"
-                href={item.href}
-                onClick={() => trackGameEvent("game_resume", item.slug, { source: "home" })}
-              >
+              <Link className="resume-card__link" href={item.href}>
                 <span className="resume-card__symbol" aria-hidden="true">{item.symbol}</span>
                 <span className="resume-card__copy">
                   <small>{relativeTime(item.updatedAt)} 저장</small>
