@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import "./globals.css";
-import { SITE_URL } from "@/lib/game-catalog";
+import { SITE_URL } from "@/lib/site-config";
 import { GameAudioProvider } from "@/components/GameShell";
 
 export const metadata: Metadata = {
@@ -73,7 +73,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <p>해야 할 일은 잠깐. 딴짓은 지금.</p>
           </div>
           <div>
-            <Link href="/games">게임 목록</Link>
+            <nav className="footer-links" aria-label="서비스 안내">
+              <Link href="/games">게임 목록</Link>
+              <Link href="/about">소개</Link>
+              <Link href="/contact">문의</Link>
+              <Link href="/privacy">개인정보 안내</Link>
+              <Link href="/terms">이용 안내</Link>
+            </nav>
             <span>© 2026 Ddanjitmoa</span>
           </div>
         </footer>
