@@ -2,14 +2,27 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import GameShell, { useGameAudio } from "@/components/GameShell";
+import {
+  clearGameProgress,
+  loadGameProgress,
+  saveGameProgress,
+} from "@/lib/game-progress";
 import { trackGameEvent } from "@/lib/telemetry";
 
 type Direction = "left" | "right" | "up" | "down";
 type Board = number[][];
 type MoveResult = { board: Board; gained: number; moved: boolean; merged: boolean };
 type Snapshot = { board: Board; score: number; won: boolean; gameOver: boolean };
+type Saved2048State = {
+  board: Board;
+  score: number;
+  won: boolean;
+  gameOver: boolean;
+  history: Snapshot[];
+};
 
 const SIZE = 4;
+const BEST_KEY = "ddanjitmoa:2048:best";
 const baseBoard = (): Board => Array.from({ length: SIZE }, () => Array<number>(SIZE).fill(0));
 const starterBoard = (): Board => {
   const board = baseBoard();
@@ -18,6 +31,47 @@ const starterBoard = (): Board => {
   return board;
 };
 const cloneBoard = (board: Board) => board.map((row) => row.slice());
+
+function isBoard(value: unknown): value is Board {
+  return (
+    Array.isArray(value) &&
+    value.length === SIZE &&
+    value.every(
+      (row) =>
+        Array.isArray(row) &&
+        row.length === SIZE &&
+        row.every((cell) => typeof cell === "number" && Number.isFinite(cell) && cell >= 0),
+    )
+  );
+}
+
+function isSnapshot(value: unknown): value is Snapshot {
+  if (!value || typeof value !== "object") return false;
+  const snapshot = value as Partial<Snapshot>;
+  return (
+    isBoard(snapshot.board) &&
+    typeof snapshot.score === "number" &&
+    Number.isFinite(snapshot.score) &&
+    snapshot.score >= 0 &&
+    typeof snapshot.won === "boolean" &&
+    typeof snapshot.gameOver === "boolean"
+  );
+}
+
+function isSaved2048State(value: unknown): value is Saved2048State {
+  if (!value || typeof value !== "object") return false;
+  const state = value as Partial<Saved2048State>;
+  return (
+    isBoard(state.board) &&
+    typeof state.score === "number" &&
+    Number.isFinite(state.score) &&
+    state.score >= 0 &&
+    typeof state.won === "boolean" &&
+    typeof state.gameOver === "boolean" &&
+    Array.isArray(state.history) &&
+    state.history.every(isSnapshot)
+  );
+}
 
 function addRandomTile(board: Board) {
   const next = cloneBoard(board);
@@ -97,22 +151,61 @@ export default function Game2048Page() {
   const [won, setWon] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [history, setHistory] = useState<Snapshot[]>([]);
+  const [hydrated, setHydrated] = useState(false);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
-    const stored = Number(window.localStorage.getItem("ddanjitmoa:2048:best") || 0);
-    if (Number.isFinite(stored)) setBest(stored);
+    let storedBest = 0;
+    try {
+      storedBest = Number(window.localStorage.getItem(BEST_KEY) || 0);
+      if (!Number.isFinite(storedBest) || storedBest < 0) storedBest = 0;
+    } catch {
+      storedBest = 0;
+    }
+
+    const saved = loadGameProgress<unknown>("2048");
+    if (saved && isSaved2048State(saved.state) && !saved.state.gameOver) {
+      const restoredHistory = saved.state.history.slice(-10).map((snapshot) => ({
+        ...snapshot,
+        board: cloneBoard(snapshot.board),
+      }));
+      setBoard(cloneBoard(saved.state.board));
+      setScore(saved.state.score);
+      setWon(saved.state.won);
+      setGameOver(false);
+      setHistory(restoredHistory);
+      storedBest = Math.max(storedBest, saved.state.score);
+      trackGameEvent("game_resume", "2048", {
+        score: saved.state.score,
+        moves_saved: restoredHistory.length,
+      });
+      try {
+        window.localStorage.setItem(BEST_KEY, String(storedBest));
+      } catch {
+        // 최고 점수 저장이 막혀도 현재 게임은 계속 진행합니다.
+      }
+    } else if (saved) {
+      clearGameProgress("2048");
+    }
+
+    setBest(storedBest);
+    setHydrated(true);
   }, []);
 
   const updateBest = useCallback((nextScore: number) => {
     setBest((current) => {
       const next = Math.max(current, nextScore);
-      window.localStorage.setItem("ddanjitmoa:2048:best", String(next));
+      try {
+        window.localStorage.setItem(BEST_KEY, String(next));
+      } catch {
+        // 저장 공간 접근이 제한되면 현재 세션에서만 최고 점수를 유지합니다.
+      }
       return next;
     });
   }, []);
 
   const reset = useCallback(() => {
+    clearGameProgress("2048");
     setBoard(addRandomTile(addRandomTile(baseBoard())));
     setScore(0);
     setWon(false);
@@ -150,6 +243,7 @@ export default function Game2048Page() {
     }
     if (ended) {
       setGameOver(true);
+      clearGameProgress("2048");
       play("lose");
       trackGameEvent("game_end", "2048", { result: "no_moves", score: nextScore });
     }
@@ -188,11 +282,40 @@ export default function Game2048Page() {
   };
 
   const maxTile = Math.max(...board.flat());
+
+  useEffect(() => {
+    if (!hydrated) return;
+    if (gameOver || history.length === 0) {
+      clearGameProgress("2048");
+      return;
+    }
+
+    saveGameProgress<Saved2048State>({
+      slug: "2048",
+      title: "2048",
+      theme: "neon",
+      symbol: "2048",
+      summary: `점수 ${score.toLocaleString("ko-KR")} · 최대 타일 ${maxTile}`,
+      state: {
+        board: cloneBoard(board),
+        score,
+        won,
+        gameOver,
+        history: history.slice(-10).map((snapshot) => ({
+          ...snapshot,
+          board: cloneBoard(snapshot.board),
+        })),
+      },
+    });
+  }, [board, gameOver, history, hydrated, maxTile, score, won]);
+
   const status = gameOver
     ? "더 이상 움직일 수 없습니다. 최고 기록을 갱신했나요?"
     : won
       ? "2048 달성! 계속 합쳐 더 높은 숫자에 도전할 수 있습니다."
-      : "방향키 또는 화면 스와이프로 같은 숫자를 합치세요.";
+      : hydrated && history.length
+        ? "진행 상황이 자동 저장됩니다. 방향키 또는 화면 스와이프로 숫자를 합치세요."
+        : "방향키 또는 화면 스와이프로 같은 숫자를 합치세요.";
 
   return (
     <GameShell

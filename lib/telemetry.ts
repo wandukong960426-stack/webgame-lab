@@ -3,7 +3,8 @@ export type GameEvent =
   | "game_restart"
   | "game_end"
   | "game_mode_change"
-  | "game_fullscreen";
+  | "game_fullscreen"
+  | "game_resume";
 
 type GtagWindow = Window & {
   gtag?: (command: "event", eventName: string, params?: Record<string, unknown>) => void;
