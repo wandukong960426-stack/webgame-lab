@@ -2,15 +2,31 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import GameShell, { useGameAudio } from "@/components/GameShell";
+import {
+  clearGameProgress,
+  loadGameProgress,
+  saveGameProgress,
+} from "@/lib/game-progress";
 import { trackGameEvent } from "@/lib/telemetry";
 
 type Disc = 0 | 1 | 2;
+type PlayerDisc = 1 | 2;
 type Mode = "ai" | "2p";
 type Winner = Disc | "draw";
 type Move = { row: number; col: number; flips: Array<[number, number]> };
-type Snapshot = { board: Disc[][]; turn: Disc; winner: Winner; notice: string };
+type Snapshot = {
+  board: Disc[][];
+  turn: PlayerDisc;
+  winner: Winner;
+  notice: string;
+};
+type SavedOthelloState = Snapshot & {
+  mode: Mode;
+  history: Snapshot[];
+};
 
 const SIZE = 8;
+const MAX_HISTORY = 60;
 const vectors = [-1, 0, 1]
   .flatMap((dr) => [-1, 0, 1].map((dc) => [dr, dc] as const))
   .filter(([dr, dc]) => dr !== 0 || dc !== 0);
@@ -28,9 +44,70 @@ function cloneBoard(board: Disc[][]) {
   return board.map((row) => row.slice()) as Disc[][];
 }
 
-function getFlips(board: Disc[][], row: number, col: number, player: Disc) {
-  if (!player || board[row][col]) return [] as Array<[number, number]>;
-  const opponent = player === 1 ? 2 : 1;
+function cloneSnapshot(snapshot: Snapshot): Snapshot {
+  return {
+    board: cloneBoard(snapshot.board),
+    turn: snapshot.turn,
+    winner: snapshot.winner,
+    notice: snapshot.notice,
+  };
+}
+
+function isDisc(value: unknown): value is Disc {
+  return value === 0 || value === 1 || value === 2;
+}
+
+function isPlayerDisc(value: unknown): value is PlayerDisc {
+  return value === 1 || value === 2;
+}
+
+function isWinner(value: unknown): value is Winner {
+  return isDisc(value) || value === "draw";
+}
+
+function isMode(value: unknown): value is Mode {
+  return value === "ai" || value === "2p";
+}
+
+function isBoard(value: unknown): value is Disc[][] {
+  return (
+    Array.isArray(value) &&
+    value.length === SIZE &&
+    value.every(
+      (row) =>
+        Array.isArray(row) &&
+        row.length === SIZE &&
+        row.every(isDisc),
+    )
+  );
+}
+
+function isSnapshot(value: unknown): value is Snapshot {
+  if (!value || typeof value !== "object") return false;
+  const snapshot = value as Partial<Snapshot>;
+  return (
+    isBoard(snapshot.board) &&
+    isPlayerDisc(snapshot.turn) &&
+    isWinner(snapshot.winner) &&
+    typeof snapshot.notice === "string" &&
+    snapshot.notice.length <= 160
+  );
+}
+
+function isSavedOthelloState(value: unknown): value is SavedOthelloState {
+  if (!value || typeof value !== "object" || !isSnapshot(value)) return false;
+  const state = value as Partial<SavedOthelloState>;
+  return (
+    isMode(state.mode) &&
+    Array.isArray(state.history) &&
+    state.history.length <= MAX_HISTORY &&
+    state.history.every(isSnapshot)
+  );
+}
+
+function getFlips(board: Disc[][], row: number, col: number, player: PlayerDisc) {
+  if (board[row][col]) return [] as Array<[number, number]>;
+  const opponent: PlayerDisc = player === 1 ? 2 : 1;
   const all: Array<[number, number]> = [];
 
   for (const [dr, dc] of vectors) {
@@ -49,7 +126,7 @@ function getFlips(board: Disc[][], row: number, col: number, player: Disc) {
   return all;
 }
 
-function validMoves(board: Disc[][], player: Disc): Move[] {
+function validMoves(board: Disc[][], player: PlayerDisc): Move[] {
   const moves: Move[] = [];
   for (let row = 0; row < SIZE; row += 1) {
     for (let col = 0; col < SIZE; col += 1) {
@@ -60,13 +137,24 @@ function validMoves(board: Disc[][], player: Disc): Move[] {
   return moves;
 }
 
-function applyMove(board: Disc[][], move: Move, player: Disc) {
+function applyMove(board: Disc[][], move: Move, player: PlayerDisc) {
   const next = cloneBoard(board);
   next[move.row][move.col] = player;
   move.flips.forEach(([row, col]) => {
     next[row][col] = player;
   });
   return next;
+}
+
+function countDiscs(board: Disc[][]) {
+  return board.flat().reduce(
+    (acc, disc) => {
+      if (disc === 1) acc.black += 1;
+      if (disc === 2) acc.white += 1;
+      return acc;
+    },
+    { black: 0, white: 0 },
+  );
 }
 
 function chooseAiMove(board: Disc[][]): Move | null {
@@ -94,24 +182,56 @@ function chooseAiMove(board: Disc[][]): Move | null {
 export default function OthelloPage() {
   const { play } = useGameAudio();
   const [board, setBoard] = useState<Disc[][]>(initialBoard);
-  const [turn, setTurn] = useState<Disc>(1);
+  const [turn, setTurn] = useState<PlayerDisc>(1);
   const [mode, setMode] = useState<Mode>("ai");
   const [winner, setWinner] = useState<Winner>(0);
   const [notice, setNotice] = useState("흑 차례입니다.");
   const [history, setHistory] = useState<Snapshot[]>([]);
+  const [hydrated, setHydrated] = useState(false);
 
   const moves = useMemo(() => validMoves(board, turn), [board, turn]);
   const validKeys = useMemo(() => new Set(moves.map((move) => `${move.row},${move.col}`)), [moves]);
-  const counts = useMemo(() => board.flat().reduce(
-    (acc, disc) => {
-      if (disc === 1) acc.black += 1;
-      if (disc === 2) acc.white += 1;
-      return acc;
-    },
-    { black: 0, white: 0 },
-  ), [board]);
+  const counts = useMemo(() => countDiscs(board), [board]);
+  const movesPlayed = Math.max(0, counts.black + counts.white - 4);
+
+  useEffect(() => {
+    const saved = loadGameProgress<unknown>("othello");
+    if (saved && isSavedOthelloState(saved.state) && saved.state.winner === 0) {
+      const restoredCounts = countDiscs(saved.state.board);
+      const restoredMoves = Math.max(0, restoredCounts.black + restoredCounts.white - 4);
+      const currentMoves = validMoves(saved.state.board, saved.state.turn);
+      const otherTurn: PlayerDisc = saved.state.turn === 1 ? 2 : 1;
+      const otherMoves = validMoves(saved.state.board, otherTurn);
+
+      if (restoredMoves > 0 && (currentMoves.length > 0 || otherMoves.length > 0)) {
+        const restoredTurn = currentMoves.length > 0 ? saved.state.turn : otherTurn;
+        setBoard(cloneBoard(saved.state.board));
+        setTurn(restoredTurn);
+        setMode(saved.state.mode);
+        setWinner(0);
+        setNotice(
+          restoredTurn === saved.state.turn
+            ? saved.state.notice
+            : `${saved.state.turn === 1 ? "흑" : "백"}이 둘 곳이 없어 한 차례 쉽니다.`,
+        );
+        setHistory(saved.state.history.slice(-MAX_HISTORY).map(cloneSnapshot));
+        trackGameEvent("game_resume", "othello", {
+          mode: saved.state.mode,
+          moves: restoredMoves,
+          black: restoredCounts.black,
+          white: restoredCounts.white,
+        });
+      } else {
+        clearGameProgress("othello");
+      }
+    } else if (saved) {
+      clearGameProgress("othello");
+    }
+    setHydrated(true);
+  }, []);
 
   const reset = useCallback((nextMode = mode) => {
+    clearGameProgress("othello");
     setBoard(initialBoard());
     setTurn(1);
     setWinner(0);
@@ -121,9 +241,9 @@ export default function OthelloPage() {
   }, [mode]);
 
   const finishGame = useCallback((nextBoard: Disc[][]) => {
-    const black = nextBoard.flat().filter((disc) => disc === 1).length;
-    const white = nextBoard.flat().filter((disc) => disc === 2).length;
+    const { black, white } = countDiscs(nextBoard);
     const result: Winner = black === white ? "draw" : black > white ? 1 : 2;
+    clearGameProgress("othello");
     setWinner(result);
     setNotice(result === "draw" ? `무승부입니다. ${black}:${white}` : `${result === 1 ? "흑" : "백"} 승리! ${black}:${white}`);
     play(result === 1 ? "win" : mode === "ai" ? "lose" : "win");
@@ -135,14 +255,17 @@ export default function OthelloPage() {
     });
   }, [mode, play]);
 
-  const commitMove = useCallback((move: Move, player: Disc) => {
-    if (!player || winner) return;
-    setHistory((items) => [...items, { board: cloneBoard(board), turn, winner, notice }]);
+  const commitMove = useCallback((move: Move, player: PlayerDisc) => {
+    if (winner) return;
+    setHistory((items) => [
+      ...items.slice(-(MAX_HISTORY - 1)),
+      { board: cloneBoard(board), turn, winner, notice },
+    ]);
     const next = applyMove(board, move, player);
     setBoard(next);
     play(move.flips.length >= 4 ? "capture" : "move");
 
-    const opponent: Disc = player === 1 ? 2 : 1;
+    const opponent: PlayerDisc = player === 1 ? 2 : 1;
     const opponentMoves = validMoves(next, opponent);
     if (opponentMoves.length) {
       setTurn(opponent);
@@ -161,13 +284,37 @@ export default function OthelloPage() {
   }, [board, finishGame, notice, play, turn, winner]);
 
   useEffect(() => {
-    if (mode !== "ai" || turn !== 2 || winner) return;
+    if (!hydrated || mode !== "ai" || turn !== 2 || winner) return;
     const timer = window.setTimeout(() => {
       const move = chooseAiMove(board);
       if (move) commitMove(move, 2);
     }, 420);
     return () => window.clearTimeout(timer);
-  }, [board, commitMove, mode, turn, winner]);
+  }, [board, commitMove, hydrated, mode, turn, winner]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    if (winner || movesPlayed === 0) {
+      clearGameProgress("othello");
+      return;
+    }
+
+    saveGameProgress<SavedOthelloState>({
+      slug: "othello",
+      title: "오셀로",
+      theme: "forest",
+      symbol: "● ○",
+      summary: `${mode === "ai" ? "AI 대전" : "2인 대전"} · 흑 ${counts.black} : ${counts.white} 백 · ${turn === 1 ? "흑" : mode === "ai" ? "컴퓨터" : "백"} 차례`,
+      state: {
+        board: cloneBoard(board),
+        turn,
+        mode,
+        winner,
+        notice,
+        history: history.slice(-MAX_HISTORY).map(cloneSnapshot),
+      },
+    });
+  }, [board, counts.black, counts.white, history, hydrated, mode, movesPlayed, notice, turn, winner]);
 
   const undo = () => {
     if (!history.length) return;
@@ -182,6 +329,10 @@ export default function OthelloPage() {
     play("select");
   };
 
+  const status = mode === "ai" && turn === 2 && !winner
+    ? "컴퓨터가 모서리를 계산하는 중…"
+    : `${notice}${hydrated && movesPlayed > 0 && !winner ? " 진행 상황은 자동 저장됩니다." : ""}`;
+
   return (
     <GameShell
       slug="othello"
@@ -189,7 +340,7 @@ export default function OthelloPage() {
       kicker="뒤집기의 묘미"
       description="가능한 칸에 돌을 놓아 상대 돌을 양쪽에서 끼우고 내 색으로 뒤집으세요."
       theme="forest"
-      status={<span className="status-inline"><i className="status-dot" />{mode === "ai" && turn === 2 && !winner ? "컴퓨터가 모서리를 계산하는 중…" : notice}</span>}
+      status={<span className="status-inline"><i className="status-dot" />{status}</span>}
       score={
         <>
           <div className="score-chip"><span>흑</span><strong>{counts.black}</strong></div>
