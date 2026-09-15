@@ -51,7 +51,7 @@ export default function ContinuePlaying() {
             <p className="eyebrow">자동 저장</p>
             <h2 id="resume-title">하던 판 이어하기</h2>
           </div>
-          <span>이 기기의 브라우저에만 안전하게 저장됩니다.</span>
+          <span>진행 기록은 이 기기의 브라우저에만 저장됩니다.</span>
         </div>
         <div className="resume-grid">
           {items.map((item) => (
