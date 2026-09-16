@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import "./globals.css";
 import { SITE_URL } from "@/lib/site-config";
+import { ADSENSE_CLIENT_ID } from "@/lib/adsense";
+import AdSenseScript from "@/components/AdSenseScript";
 import { GameAudioProvider } from "@/components/GameShell";
 
 export const metadata: Metadata = {
@@ -15,6 +17,9 @@ export const metadata: Metadata = {
   applicationName: "딴짓모아",
   category: "games",
   alternates: { canonical: SITE_URL },
+  other: {
+    "google-adsense-account": ADSENSE_CLIENT_ID,
+  },
   openGraph: {
     type: "website",
     locale: "ko_KR",
@@ -52,6 +57,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="ko">
       <body>
+        <AdSenseScript />
         <a className="skip-link" href="#main-content">본문으로 바로가기</a>
         <header className="site-header">
           <Link href="/" className="brand" aria-label="딴짓모아 홈">
