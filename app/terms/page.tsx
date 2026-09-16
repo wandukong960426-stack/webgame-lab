@@ -5,10 +5,11 @@ import {
   OPERATOR_NAME,
   SITE_URL,
 } from "@/lib/site-config";
+import { ADSENSE_SCRIPT_ENABLED } from "@/lib/adsense";
 
 export const metadata: Metadata = {
   title: "서비스 이용 안내",
-  description: "딴짓모아 게임 이용, 저장 방식, 책임 범위와 문의 방법을 안내합니다.",
+  description: "딴짓모아 게임 이용, 저장 방식, 광고 준비 상태와 문의 방법을 안내합니다.",
   alternates: { canonical: `${SITE_URL}/terms` },
 };
 
@@ -65,9 +66,17 @@ export default function TermsPage() {
       <section className="info-section">
         <h2>광고와 외부 서비스</h2>
         <p>
-          현재 GitHub 버전에는 Google 광고 스크립트가 포함되어 있지 않습니다. 광고를 도입할 경우
-          게임 조작을 방해하거나 오클릭을 유도하지 않도록 구분해 배치하고, 개인정보 안내와 필요한
-          동의 절차를 실제 설정에 맞게 갱신합니다.
+          딴짓모아는 Google AdSense 사이트 확인을 위한 메타 정보와 ads.txt를 제공할 수 있습니다.
+          이는 사이트와 게시자 계정을 확인하기 위한 준비 항목이며, 그 자체가 광고 노출을 의미하지는 않습니다.
+        </p>
+        <p>
+          {ADSENSE_SCRIPT_ENABLED
+            ? "현재 빌드는 승인·동의 관리·운영 활성화 조건이 충족된 상태로 Google AdSense 광고 코드를 실행할 수 있습니다."
+            : "현재 기본 빌드는 사이트 승인, 동의 관리 준비, 운영 활성화 조건이 모두 충족되기 전까지 광고 코드를 실행하지 않습니다."}
+        </p>
+        <p>
+          광고를 표시할 때는 게임 조작을 방해하거나 오클릭을 유도하지 않도록 광고임을 구분해 배치하고,
+          적용되는 개인정보 안내와 동의 관리 절차를 실제 운영 설정에 맞게 유지합니다.
         </p>
         <p>
           외부 사이트로 이동하는 링크가 제공되는 경우 해당 서비스의 이용조건과 개인정보 안내가 적용됩니다.

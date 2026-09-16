@@ -5,10 +5,14 @@ import {
   OPERATOR_NAME,
   SITE_URL,
 } from "@/lib/site-config";
+import {
+  ADSENSE_CLIENT_ID,
+  ADSENSE_SCRIPT_ENABLED,
+} from "@/lib/adsense";
 
 export const metadata: Metadata = {
   title: "개인정보 · 저장 정보 안내",
-  description: "딴짓모아가 사용하는 브라우저 저장 정보, 관리자 로그인과 문의 처리 방식을 안내합니다.",
+  description: "딴짓모아가 사용하는 브라우저 저장 정보, 관리자 로그인과 광고 준비 상태를 안내합니다.",
   alternates: { canonical: `${SITE_URL}/privacy` },
 };
 
@@ -25,8 +29,13 @@ export default function PrivacyPage() {
         <ul>
           <li>일반 게임 이용에는 회원가입이나 이름·전화번호 입력이 필요하지 않습니다.</li>
           <li>게임 진행 기록과 소리 설정은 기본적으로 현재 브라우저에 저장됩니다.</li>
-          <li>현재 코드에는 Google Analytics와 Google 광고 스크립트가 포함되어 있지 않습니다.</li>
-          <li>광고나 선택형 방문 분석을 도입하기 전 이 안내와 필요한 동의 절차를 갱신합니다.</li>
+          <li>AdSense 사이트 확인용 메타 태그와 ads.txt가 포함되어 있습니다.</li>
+          <li>
+            {ADSENSE_SCRIPT_ENABLED
+              ? "현재 빌드는 Google AdSense 광고 스크립트를 불러오도록 설정되어 있습니다."
+              : "현재 기본 설정에서는 Google AdSense 광고 스크립트를 불러오지 않습니다."}
+          </li>
+          <li>광고 송출 설정을 변경하면 이 안내와 동의 관리 상태를 함께 재검토합니다.</li>
         </ul>
       </section>
 
@@ -72,6 +81,33 @@ export default function PrivacyPage() {
       </section>
 
       <section className="info-section">
+        <h2>Google AdSense 준비와 광고</h2>
+        <p>
+          사이트 소유권과 광고 판매자 정보를 확인할 수 있도록
+          <code> google-adsense-account={ADSENSE_CLIENT_ID}</code> 메타 정보와
+          루트 경로의 ads.txt를 제공합니다. 이 두 항목 자체는 게임 이용자의 이름이나
+          연락처를 수집하기 위한 기능이 아닙니다.
+        </p>
+        {ADSENSE_SCRIPT_ENABLED ? (
+          <>
+            <p>
+              현재 빌드에서는 Google AdSense 광고 코드가 실행될 수 있습니다. 광고 제공 과정에서
+              Google과 그 파트너가 쿠키, IP 주소, 기기·브라우저 정보, 광고 상호작용 정보를 처리할 수 있습니다.
+            </p>
+            <p>
+              적용 지역에서 필요한 동의 메시지는 Google Privacy &amp; messaging 또는 Google 인증 CMP의
+              실제 게시 상태에 따라 제공되어야 합니다.
+            </p>
+          </>
+        ) : (
+          <p className="info-callout">
+            광고 코드 요청은 사이트 승인, 동의 관리 준비, 운영 활성화의 세 조건을 모두 충족할 때만
+            실행되도록 차단되어 있습니다.
+          </p>
+        )}
+      </section>
+
+      <section className="info-section">
         <h2>관리자 로그인</h2>
         <p>
           관리자 화면은 허용된 운영자만 Google 로그인을 사용할 수 있습니다. 로그인 과정에서
@@ -88,9 +124,8 @@ export default function PrivacyPage() {
           호스팅 로그의 처리 범위와 보관기간은 해당 제공자의 운영 정책이 적용됩니다.
         </p>
         <p>
-          현재 공개 코드에는 Google 방문 분석이나 광고 스크립트가 없습니다. 향후 Google 광고를
-          도입하면 쿠키, IP 주소 또는 기타 식별자의 사용·제3자 처리와 동의 방법을 실제 설정에 맞게
-          공개한 뒤 활성화합니다.
+          선택형 방문 분석이나 다른 광고·외부 서비스를 추가하면 실제 구현과 지역별 요구사항에 맞게
+          이 안내를 변경하고 필요한 동의 절차를 적용합니다.
         </p>
       </section>
 

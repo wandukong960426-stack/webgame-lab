@@ -19,6 +19,9 @@
 3. **병합됨**: PR이 `main`에 병합됐다.
 4. **프리뷰 확인됨**: 특정 프리뷰 URL에서 주요 경로와 UI를 직접 검사했다.
 5. **프로덕션 확인됨**: 공식 도메인의 `/api/release`가 이 저장소와 기대 커밋을 반환하고 주요 경로 스모크 테스트가 통과했다.
+6. **AdSense 연결 확인됨**: 공식 도메인에 올바른 게시자 메타 태그와 ads.txt가 존재한다.
+7. **광고 활성화 확인됨**: 사이트 승인·동의 관리·광고 단위·활성화 조건이 모두 충족되고 `/api/release`와 실제 페이지 스크립트가 일치한다.
+8. **첫 수익 확인됨**: AdSense 보고서에서 0보다 큰 추정 수익이 확인됐다.
 
 앞 단계가 완료됐다고 다음 단계까지 완료된 것은 아니다.
 
@@ -36,6 +39,8 @@ EXPECTED_GIT_SHA=<full-commit-sha> npm run audit:production
 
 GitHub Actions의 `Production source audit` 워크플로에서도 같은 검사를 수동 실행할 수 있다.
 
+감사는 공식 도메인의 페이지·robots·sitemap·ads.txt·AdSense 메타 태그·배포 소스·커밋·광고 활성 상태를 함께 확인한다.
+
 ## 공식 도메인 전환 전 필수 조건
 
 - [ ] Sites 운영본의 전체 URL과 기능 목록을 확보한다.
@@ -46,7 +51,24 @@ GitHub Actions의 `Production source audit` 워크플로에서도 같은 검사�
 - [ ] 프리뷰에서 모바일·PC 실기기 테스트를 완료한다.
 - [ ] 공식 도메인 전환 후 `/api/release`의 source와 commit을 확인한다.
 - [ ] 홈, 게임, 법률 페이지, robots.txt, sitemap.xml을 공식 도메인에서 검사한다.
+- [ ] 공식 도메인의 `/ads.txt`와 `google-adsense-account` 메타 태그를 확인한다.
+- [ ] 광고가 활성화된 경우 승인·동의·slot 상태와 실제 스크립트가 일치하는지 확인한다.
 - [ ] Search Console과 네이버 서치어드바이저에서 새 sitemap을 다시 확인한다.
+
+## 광고 활성화 금지 조건
+
+다음 중 하나라도 해당하면 `NEXT_PUBLIC_ADSENSE_ENABLED=true`로 설정하지 않는다.
+
+- 지급 프로필 미완료
+- AdSense 사이트 등록 또는 검토 미완료
+- 사이트 승인 미확인
+- 적용 지역에 필요한 동의 관리 미게시
+- 숫자 광고 단위 slot ID 미설정
+- 개인정보 안내가 실제 광고 처리와 다름
+- 공식 도메인에서 ads.txt와 게시자 메타 태그를 확인하지 못함
+- 광고 위치가 게임판·착수·이동·전체화면 조작을 방해함
+
+세부 절차는 `docs/MONETIZATION.md`를 따른다.
 
 ## 배포 금지 조건
 
@@ -65,4 +87,5 @@ GitHub Actions의 `Production source audit` 워크플로에서도 같은 검사�
 - CI 타입 검사·빌드·스모크 결과
 - 확인한 프리뷰 또는 공식 URL
 - `/api/release`의 source와 commit
+- AdSense 관련 작업이면 지급 프로필·사이트 검토·승인·동의·slot·광고 활성 상태
 - 확인하지 못한 항목을 명시한 제한사항

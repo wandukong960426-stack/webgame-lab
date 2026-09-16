@@ -1,0 +1,21 @@
+.game-page-ad-container {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  padding: 0 24px 54px;
+}
+
+.ad-slot--game-footer {
+  min-height: 120px;
+  margin-top: 0;
+}
+
+@media (max-width: 700px) {
+  .game-page-ad-container {
+    padding: 0 12px 34px;
+  }
+
+  .ad-slot--game-footer {
+    min-height: 100px;
+    border-radius: 15px;
+  }
+}
