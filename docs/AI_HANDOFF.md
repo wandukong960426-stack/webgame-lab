@@ -12,6 +12,21 @@
 
 ## Handoff record
 
+### Claude GitHub 연결 확인
+
+- 담당 AI: Claude
+- 목표: Claude GitHub 연결 확인 (첫 연결 시험)
+- 브랜치: `claude/connection-test`
+- PR: 이 기록과 함께 Draft PR 생성
+- 변경 파일: `docs/AI_HANDOFF.md`
+- 구현 결과: 문서에 연결 확인 기록만 추가, 게임 코드·배포 설정 변경 없음
+- 검증 명령과 결과: 문서 전용 변경으로 별도 실행 없음
+- 모바일·PC 확인: 해당 없음 (문서 전용)
+- 확인하지 못한 항목: GitHub Actions 통과 여부, Codex 검토
+- 위험·롤백: 문서 변경만 있어 위험 없음, 필요 시 PR 닫기로 되돌림
+- 다음 담당자가 할 일: GitHub Actions 통과 확인 후 Codex가 PR diff와 CI 결과 검토, 사용자 승인 후 병합
+- 배포 상태: 구현됨
+
 ### 작성 양식
 
 - 담당 AI:
