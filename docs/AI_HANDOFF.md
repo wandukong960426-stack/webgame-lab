@@ -27,6 +27,21 @@
 - 다음 담당자가 할 일: GitHub Actions 통과 확인 후 Codex가 PR diff와 CI 결과 검토, 사용자 승인 후 병합
 - 배포 상태: 구현됨
 
+### Sites 운영본 원본 소스 인수인계 시도
+
+- 담당 AI: Claude
+- 목표: 공식 운영본(Sites `ttanjitmoa`)의 원본 소스·버전·커밋을 확보해 인수인계 패키지 작성
+- 브랜치: `claude/gallant-ptolemy-kpfv8z`
+- PR: 없음 (요청받지 않음)
+- 변경 파일: `docs/SITES_SOURCE_EXPORT.md`(신규), `docs/AI_HANDOFF.md`
+- 구현 결과: **원본 소스 미확보.** 이 세션에는 Sites 접근 수단이 없고, GitHub·Drive에 원본이 없으며, 공식 도메인 네트워크 접근도 차단됨. 차단 내역과 Sites 권한자용 내보내기 절차·매니페스트 양식만 문서화함. 사이트 수정·배포·도메인 변경 없음
+- 검증 명령과 결과: `npm install`, `npm run typecheck`, `npm run build`, `npm run smoke`(CI와 같이 `PORT=3010 npm run start` 후 실행) 모두 통과. 문서 전용 변경
+- 모바일·PC 확인: 해당 없음
+- 확인하지 못한 항목: 운영본 배포 버전, 원본 커밋, 소스·에셋·환경변수 전부
+- 위험·롤백: 문서 변경만 있음
+- 다음 담당자가 할 일: Sites 권한자가 `docs/SITES_SOURCE_EXPORT.md` 절차로 원본을 내보내 비공개 저장소 또는 Drive로 전달
+- 배포 상태: 구현됨 (문서)
+
 ### 작성 양식
 
 - 담당 AI:
