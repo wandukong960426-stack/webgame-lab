@@ -1,4 +1,4 @@
-export type GameTheme = "wood" | "forest" | "neon" | "berry" | "royal" | "ink";
+export type GameTheme = "wood" | "forest" | "neon" | "berry" | "royal" | "ink" | "midnight";
 
 export type GameProgressMeta = {
   slug: string;

@@ -7,9 +7,10 @@ export type GameSlug =
   | "2048"
   | "tic-tac-toe"
   | "chess"
-  | "janggi";
+  | "janggi"
+  | "escape-room";
 
-export type GameTheme = "wood" | "forest" | "neon" | "berry" | "royal" | "ink";
+export type GameTheme = "wood" | "forest" | "neon" | "berry" | "royal" | "ink" | "midnight";
 
 export type GameInfo = {
   slug: GameSlug;
@@ -107,6 +108,20 @@ export const gamesCatalog: GameInfo[] = [
     playTime: "12–35분",
     players: "1–2인",
     keywords: ["무료 장기", "온라인 장기", "장기 AI", "한국 장기"],
+  },
+  {
+    slug: "escape-room",
+    title: "방탈출: 별지기의 서재",
+    kicker: "3D 추리 방탈출",
+    description: "달빛 서재에 갇혔다. 단서를 잇고 장치를 되살려 문을 여세요.",
+    longDescription:
+      "사라진 천문학자의 서재를 3D로 탐험하며 숨은 단서, 자물쇠, 망원경, 전기 장치를 차례로 풀어 탈출하는 추리 방탈출입니다. 단계별 힌트와 여유·도전 모드, 자동 저장을 지원합니다.",
+    symbol: "🗝",
+    theme: "midnight",
+    playTime: "20–40분",
+    players: "1인",
+    featured: true,
+    keywords: ["방탈출 게임", "온라인 방탈출", "3D 방탈출", "무료 방탈출", "추리 퍼즐 게임"],
   },
 ];
 

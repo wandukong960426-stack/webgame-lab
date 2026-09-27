@@ -116,6 +116,7 @@
 .game-card--berry .game-card__visual { background: #ee6e8d; color: #4b1630; }
 .game-card--royal .game-card__visual { background: #283559; color: #f4dfad; }
 .game-card--ink .game-card__visual { background: #e9d9bd; color: #412e24; }
+.game-card--midnight .game-card__visual { background: radial-gradient(circle at 70% 25%, #3b4f86, #0d1426 70%); color: #f1d38c; }
 
 .game-card__body {
   padding: 21px 22px 24px;

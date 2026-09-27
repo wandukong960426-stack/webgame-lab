@@ -7,7 +7,7 @@ import { games as getEditableGames } from "@/lib/db";
 export const metadata: Metadata = {
   title: "무료 웹게임 전체 목록",
   description:
-    "오목, 오셀로, 2048, 틱택토, 체스, 장기를 설치와 회원가입 없이 바로 즐기세요.",
+    "오목, 오셀로, 2048, 틱택토, 체스, 장기, 3D 방탈출을 설치와 회원가입 없이 바로 즐기세요.",
   alternates: { canonical: `${SITE_URL}/games` },
 };
 

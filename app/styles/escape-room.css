@@ -1,0 +1,1072 @@
+/* 3D 방탈출: 별지기의 서재 */
+
+/* 카드 목록 마지막 줄에 혼자 남으면 한 줄 전체를 쓰는 넓은 카드로 보여 줍니다. */
+.game-card-grid:not(.game-card-grid--catalog) > .game-card--midnight:last-child:nth-child(odd),
+.game-card-grid--catalog > .game-card--midnight:last-child:nth-child(3n + 1) {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 980px) {
+  .game-card-grid--catalog > .game-card--midnight:last-child:nth-child(3n + 1) {
+    grid-column: auto;
+  }
+
+  .game-card-grid--catalog > .game-card--midnight:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+.game-shell[data-game="escape-room"] .game-board-frame {
+  display: block;
+  min-height: 0;
+  border-color: #1c2335;
+  background: #04060b;
+  padding: 0;
+}
+
+.escape-stage {
+  --esc-gold: #e7c47e;
+  --esc-gold-strong: #f3d48f;
+  --esc-ink: #f1e9d6;
+  --esc-muted: #b7ad98;
+  --esc-glass: rgba(10, 13, 22, 0.66);
+  --esc-line: rgba(231, 196, 126, 0.34);
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  min-height: 440px;
+  max-height: calc(100vh - 150px);
+  overflow: hidden;
+  border-radius: 25px;
+  background: radial-gradient(circle at 60% 30%, #1a2440, #04060b 70%);
+  color: var(--esc-ink);
+  isolation: isolate;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.escape-stage:focus-visible {
+  box-shadow: inset 0 0 0 3px var(--esc-gold);
+}
+
+.escape-canvas-host {
+  position: absolute;
+  inset: 0;
+}
+
+.escape-canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  cursor: grab;
+  touch-action: none;
+}
+
+.escape-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  max-width: 260px;
+  border: 1px solid var(--esc-line);
+  border-radius: 999px;
+  background: rgba(8, 10, 18, 0.84);
+  padding: 5px 11px;
+  color: var(--esc-gold-strong);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+
+.escape-tooltip.is-visible {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .escape-tooltip {
+    display: none;
+  }
+}
+
+/* 로딩 · 대체 화면 */
+.escape-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 16px;
+  color: var(--esc-muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.escape-loading__moon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  box-shadow: inset -12px -4px 0 0 #f3e2b0;
+  animation: escape-spin 2.4s ease-in-out infinite;
+}
+
+@keyframes escape-spin {
+  0% { transform: rotate(0deg); opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { transform: rotate(360deg); opacity: 0.6; }
+}
+
+.escape-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  overflow: auto;
+  background: radial-gradient(circle at 70% 10%, #1d2848, #06080f 70%);
+  padding: 20px clamp(14px, 4vw, 40px);
+}
+
+.escape-stage.is-playing .escape-fallback {
+  top: 58px;
+  bottom: 84px;
+  padding-top: 8px;
+}
+
+.escape-fallback__message {
+  border-left: 3px solid var(--esc-gold);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 10px 12px;
+  color: var(--esc-ink) !important;
+  font-weight: 650;
+}
+
+.escape-fallback > strong {
+  color: var(--esc-gold-strong);
+  font-size: 22px;
+}
+
+.escape-fallback p {
+  max-width: 560px;
+  margin: 0;
+  color: var(--esc-muted);
+  font-size: 14px;
+}
+
+.escape-fallback .escape-explore button,
+.escape-fallback .escape-nav button {
+  border-color: var(--esc-line);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--esc-ink);
+}
+
+.escape-fallback .escape-nav button.is-active {
+  border-color: var(--esc-gold);
+  background: rgba(231, 196, 126, 0.2);
+  color: var(--esc-gold-strong);
+}
+
+/* HUD */
+.escape-hud {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.escape-hud > * {
+  pointer-events: auto;
+}
+
+.escape-hud__top {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.escape-hud__group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.escape-chip {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  border: 1px solid var(--esc-line);
+  border-radius: 999px;
+  background: var(--esc-glass);
+  padding: 6px 13px;
+  color: var(--esc-ink);
+  font-size: 12px;
+  font-weight: 850;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.escape-chip--timer {
+  color: var(--esc-gold-strong);
+  font-variant-numeric: tabular-nums;
+}
+
+.escape-chip--timer.is-urgent {
+  border-color: rgba(255, 110, 90, 0.7);
+  color: #ffb4a6;
+  animation: escape-pulse-red 1.4s ease-in-out infinite;
+}
+
+@keyframes escape-pulse-red {
+  50% { box-shadow: 0 0 0 5px rgba(255, 90, 70, 0.18); }
+}
+
+.escape-btn {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid var(--esc-line, rgba(231, 196, 126, 0.34));
+  border-radius: 999px;
+  background: rgba(14, 18, 30, 0.72);
+  padding: 9px 18px;
+  color: var(--esc-ink, #f1e9d6);
+  font-size: 14px;
+  font-weight: 850;
+  text-decoration: none;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+.escape-btn:hover,
+.escape-btn:focus-visible {
+  border-color: var(--esc-gold, #e7c47e);
+  outline: none;
+}
+
+.escape-btn:focus-visible {
+  box-shadow: 0 0 0 3px rgba(231, 196, 126, 0.35);
+}
+
+.escape-btn:active {
+  transform: scale(0.97);
+}
+
+.escape-btn--primary {
+  border-color: transparent;
+  background: linear-gradient(180deg, #f1d38c, #c99a45);
+  color: #1d1408;
+}
+
+.escape-btn--ghost {
+  background: transparent;
+}
+
+.escape-btn--round {
+  width: 42px;
+  min-width: 42px;
+  padding: 0;
+  font-size: 17px;
+}
+
+.escape-btn.is-nudging {
+  animation: escape-nudge 1.6s ease-in-out infinite;
+}
+
+@keyframes escape-nudge {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(243, 212, 143, 0.55); }
+  50% { box-shadow: 0 0 0 9px rgba(243, 212, 143, 0); }
+}
+
+.escape-progress {
+  position: absolute;
+  top: 26px;
+  left: 50%;
+  display: flex;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.escape-progress li {
+  width: 8px;
+  height: 8px;
+  border: 1px solid rgba(231, 196, 126, 0.55);
+  background: rgba(10, 12, 20, 0.6);
+  transform: rotate(45deg);
+}
+
+.escape-progress li.is-done {
+  border-color: var(--esc-gold-strong);
+  background: var(--esc-gold-strong);
+  box-shadow: 0 0 8px rgba(243, 212, 143, 0.7);
+}
+
+.escape-progress li.is-current {
+  animation: escape-twinkle 2s ease-in-out infinite;
+}
+
+@keyframes escape-twinkle {
+  50% { background: rgba(243, 212, 143, 0.45); }
+}
+
+.escape-nudge {
+  position: absolute;
+  top: 62px;
+  left: 50%;
+  max-width: calc(100% - 24px);
+  border: 1px solid var(--esc-line);
+  border-radius: 999px;
+  background: rgba(40, 30, 10, 0.78);
+  padding: 8px 15px;
+  color: var(--esc-gold-strong);
+  font-size: 13px;
+  font-weight: 800;
+  transform: translateX(-50%);
+  cursor: pointer;
+  animation: escape-rise 360ms ease both;
+}
+
+.escape-toast {
+  position: absolute;
+  bottom: 92px;
+  left: 50%;
+  width: max-content;
+  max-width: min(640px, calc(100% - 28px));
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid var(--esc-gold);
+  border-radius: 14px;
+  background: rgba(8, 10, 18, 0.8);
+  padding: 10px 16px;
+  color: var(--esc-ink);
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.5;
+  text-align: center;
+  transform: translateX(-50%);
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: escape-rise 280ms ease both;
+}
+
+.escape-toast--success {
+  border-left-color: #8ee6a8;
+}
+
+.escape-toast--error {
+  border-left-color: #ff8f7a;
+  animation: escape-rise 280ms ease both, escape-shake 320ms ease 60ms;
+}
+
+.escape-toast--discovery {
+  border-left-color: #b995ff;
+  box-shadow: 0 0 30px rgba(150, 110, 255, 0.25);
+}
+
+@keyframes escape-rise {
+  from { opacity: 0; transform: translate(-50%, 8px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes escape-shake {
+  25% { transform: translate(calc(-50% - 5px), 0); }
+  50% { transform: translate(calc(-50% + 4px), 0); }
+  75% { transform: translate(calc(-50% - 2px), 0); }
+}
+
+.escape-inventory {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  display: flex;
+  min-height: 66px;
+  max-width: calc(100% - 24px);
+  align-items: center;
+  gap: 7px;
+  overflow-x: auto;
+  border: 1px solid var(--esc-line);
+  border-radius: 20px;
+  background: var(--esc-glass);
+  padding: 6px;
+  transform: translateX(-50%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.escape-inventory__empty {
+  padding: 0 14px;
+  color: var(--esc-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.escape-slot {
+  display: grid;
+  width: 64px;
+  min-width: 64px;
+  height: 54px;
+  place-items: center;
+  gap: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 2px;
+  color: var(--esc-ink);
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease, transform 120ms ease;
+  animation: escape-pop 420ms cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+
+.escape-slot span {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.escape-slot small {
+  max-width: 60px;
+  overflow: hidden;
+  color: var(--esc-muted);
+  font-size: 10px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.escape-slot:hover,
+.escape-slot:focus-visible {
+  border-color: var(--esc-gold);
+  outline: none;
+}
+
+.escape-slot:active {
+  transform: scale(0.95);
+}
+
+.escape-slot.is-on {
+  border-color: #b48cff;
+  background: rgba(130, 80, 255, 0.28);
+  box-shadow: 0 0 18px rgba(140, 90, 255, 0.55);
+}
+
+.escape-slot.is-on small {
+  color: #e2d4ff;
+}
+
+@keyframes escape-pop {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* 힌트 패널 */
+.escape-panel {
+  position: absolute;
+  z-index: 6;
+  border: 1px solid var(--esc-line);
+  border-radius: 20px;
+  background: rgba(10, 12, 20, 0.9);
+  padding: 16px;
+  color: var(--esc-ink);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.escape-hints {
+  top: 62px;
+  right: 12px;
+  display: grid;
+  width: min(360px, calc(100% - 24px));
+  max-height: calc(100% - 160px);
+  gap: 12px;
+  overflow: auto;
+  animation: escape-rise-panel 220ms ease both;
+}
+
+@keyframes escape-rise-panel {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.escape-hints header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.escape-hints header div {
+  display: grid;
+  gap: 2px;
+}
+
+.escape-hints header small {
+  color: var(--esc-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.escape-hints header strong {
+  color: var(--esc-gold-strong);
+  font-size: 18px;
+}
+
+.escape-hints ol {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.escape-hints li {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 9px 11px;
+  font-size: 13px;
+  line-height: 1.55;
+  animation: escape-rise-panel 220ms ease both;
+}
+
+.escape-hints li span {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--esc-gold);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.escape-hints__note {
+  margin: 0;
+  color: var(--esc-muted);
+  font-size: 11px;
+}
+
+/* 오버레이 공통 */
+.escape-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  overflow: auto;
+  background: rgba(3, 5, 10, 0.5);
+  padding: 18px;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: escape-fade 260ms ease both;
+}
+
+@keyframes escape-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.escape-intro__card,
+.escape-dialog__card {
+  display: grid;
+  width: min(560px, 100%);
+  gap: 14px;
+  border: 1px solid var(--esc-line);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 85% 0%, rgba(231, 196, 126, 0.16), transparent 60%),
+    linear-gradient(180deg, rgba(20, 24, 40, 0.94), rgba(8, 10, 18, 0.96));
+  padding: clamp(20px, 4vw, 34px);
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
+}
+
+.escape-eyebrow {
+  margin: 0;
+  color: var(--esc-gold);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+}
+
+.escape-intro h2,
+.escape-dialog__card h2 {
+  margin: 0;
+  color: #fff4dc;
+  font-family: "Noto Serif KR", "Nanum Myeongjo", AppleMyungjo, Batang, serif;
+  font-size: clamp(30px, 5vw, 46px);
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.escape-dialog__card h2 {
+  font-size: clamp(24px, 4vw, 32px);
+}
+
+.escape-intro__story,
+.escape-dialog__card p,
+.escape-ending__story {
+  margin: 0;
+  color: #d8cfbb;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.escape-intro__story em,
+.escape-ending__story em {
+  color: var(--esc-gold-strong);
+  font-style: normal;
+}
+
+.escape-modes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.escape-modes button {
+  display: grid;
+  gap: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 13px 14px;
+  color: var(--esc-ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.escape-modes button strong {
+  font-size: 15px;
+}
+
+.escape-modes button span {
+  color: var(--esc-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.escape-modes button.is-active {
+  border-color: var(--esc-gold);
+  background: rgba(231, 196, 126, 0.12);
+  box-shadow: inset 0 0 0 1px var(--esc-gold);
+}
+
+.escape-modes button:focus-visible {
+  outline: 2px solid var(--esc-gold);
+  outline-offset: 2px;
+}
+
+.escape-intro__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.escape-intro__actions .escape-btn {
+  flex: 1 1 200px;
+}
+
+.escape-intro__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 0;
+  padding: 0;
+  color: var(--esc-muted);
+  font-size: 12px;
+  font-weight: 700;
+  list-style: none;
+}
+
+.escape-intro__controls li::before {
+  content: "✦ ";
+  color: var(--esc-gold);
+}
+
+.escape-dialog__card .escape-btn {
+  width: 100%;
+}
+
+/* 일지 */
+.escape-journal {
+  background: rgba(3, 5, 10, 0.62);
+}
+
+.escape-journal__page {
+  display: grid;
+  width: min(520px, 100%);
+  gap: 10px;
+  border-radius: 6px 18px 18px 6px;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.35), transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(120, 80, 30, 0.25), transparent 50%),
+    linear-gradient(90deg, #cdb88e 0, #e9dcbc 5%, #e6d6b0 100%);
+  padding: 28px 30px 22px 38px;
+  color: #3a2716;
+  font-family: "Noto Serif KR", "Nanum Myeongjo", AppleMyungjo, Batang, serif;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55), inset 6px 0 12px rgba(80, 50, 20, 0.25);
+  transform: rotate(-0.6deg);
+  animation: escape-rise-panel 300ms ease both;
+}
+
+.escape-journal__page h2 {
+  margin: 0 0 6px;
+  border-bottom: 1px solid rgba(90, 60, 30, 0.3);
+  padding-bottom: 10px;
+  font-size: 22px;
+}
+
+.escape-journal__page p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.escape-journal__page footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+  font-family: Inter, Pretendard, "Noto Sans KR", sans-serif;
+}
+
+.escape-journal__tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.escape-journal__tabs button {
+  border: 1px solid rgba(90, 60, 30, 0.35);
+  border-radius: 999px;
+  background: transparent;
+  padding: 6px 12px;
+  color: #3a2716;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.escape-journal__tabs button.is-active {
+  background: #3a2716;
+  color: #f2e6c8;
+}
+
+/* 망원경 */
+.escape-telescope {
+  place-items: stretch;
+  gap: 0;
+  background: #000;
+  padding: 0;
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+.escape-telescope__canvas {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  cursor: grab;
+  touch-action: none;
+}
+
+.escape-telescope__canvas:active {
+  cursor: grabbing;
+}
+
+.escape-telescope__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5));
+  padding: 10px 14px 14px;
+}
+
+.escape-telescope__bar p {
+  flex: 1 1 280px;
+  margin: 0;
+  color: #d9d2c0;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.escape-telescope__bar > div {
+  display: flex;
+  gap: 8px;
+}
+
+/* 엔딩 */
+.escape-ending {
+  background: radial-gradient(circle at 50% 30%, rgba(255, 226, 170, 0.35), rgba(3, 5, 10, 0.72) 70%);
+}
+
+.escape-ending__card h2 {
+  font-size: clamp(34px, 6vw, 52px);
+}
+
+.escape-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.escape-stats div {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 10px;
+  text-align: center;
+}
+
+.escape-stats dt {
+  color: var(--esc-muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.escape-stats dd {
+  margin: 2px 0 0;
+  color: var(--esc-gold-strong);
+  font-size: 16px;
+  font-weight: 900;
+  word-break: keep-all;
+}
+
+/* 사이드 패널: 조사 목록 */
+.escape-actions__label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.escape-nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.escape-nav button {
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  padding: 6px 8px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.escape-nav button.is-active {
+  border-color: var(--game-accent);
+  background: color-mix(in srgb, var(--game-accent) 16%, #fff);
+}
+
+.escape-explore {
+  display: grid;
+  gap: 8px;
+}
+
+.escape-explore ul {
+  display: grid;
+  gap: 5px;
+  max-height: 260px;
+  margin: 0;
+  overflow: auto;
+  padding: 0;
+  list-style: none;
+}
+
+.escape-explore li button {
+  width: 100%;
+  min-height: 36px;
+  border: 1px dashed color-mix(in srgb, var(--game-accent) 40%, var(--line));
+  border-radius: 10px;
+  background: transparent;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 750;
+  text-align: left;
+  cursor: pointer;
+}
+
+.escape-explore li button:hover,
+.escape-explore li button:focus-visible,
+.escape-nav button:hover,
+.escape-nav button:focus-visible {
+  border-color: var(--game-accent);
+  outline: none;
+}
+
+.escape-keypad {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.escape-keypad output {
+  grid-column: 1 / -1;
+  border-radius: 10px;
+  background: #0f2a1c;
+  padding: 6px;
+  color: #a8ffcb;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  text-align: center;
+}
+
+.escape-keypad button {
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.escape-fallback .escape-keypad button {
+  border-color: var(--esc-line);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--esc-ink);
+}
+
+.escape-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* 전체화면 */
+@media (max-width: 700px) {
+  /* 모바일 전체화면에서는 게임 HUD가 상태를 보여 주므로, 공용 상태 알약은 화면에서만 숨기고 스크린리더 안내는 유지합니다. */
+  .game-shell.is-theater[data-game="escape-room"] .game-status,
+  .game-shell[data-game="escape-room"]:fullscreen .game-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    min-height: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    padding: 0;
+    border: 0;
+  }
+}
+
+.game-shell.is-theater[data-game="escape-room"] .game-board-frame,
+.game-shell[data-game="escape-room"]:fullscreen .game-board-frame {
+  min-height: 0;
+}
+
+.game-shell.is-theater .escape-stage,
+.game-shell:fullscreen .escape-stage {
+  height: calc(100dvh - 200px);
+  max-height: none;
+  aspect-ratio: auto;
+}
+
+@media (max-width: 700px) {
+  .escape-stage {
+    aspect-ratio: 3 / 4;
+    min-height: 480px;
+    max-height: 82dvh;
+    border-radius: 20px;
+  }
+
+  .game-shell.is-theater .escape-stage,
+  .game-shell:fullscreen .escape-stage {
+    height: 100%;
+    min-height: 0;
+    border-radius: 0;
+  }
+
+  .escape-toast {
+    bottom: 84px;
+    font-size: 13px;
+  }
+
+  .escape-inventory {
+    min-height: 58px;
+    gap: 5px;
+  }
+
+  .escape-slot {
+    width: 56px;
+    min-width: 56px;
+    height: 48px;
+  }
+
+  .escape-slot span {
+    font-size: 19px;
+  }
+
+  .escape-progress {
+    top: 58px;
+  }
+
+  .escape-nudge {
+    top: 76px;
+    font-size: 12px;
+  }
+
+  .escape-hints {
+    top: auto;
+    right: 8px;
+    bottom: 82px;
+    left: 8px;
+    width: auto;
+    max-height: 55%;
+  }
+
+  .escape-modes {
+    grid-template-columns: 1fr;
+  }
+
+  .escape-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .escape-overlay {
+    place-items: start center;
+    padding: 12px;
+  }
+
+  .escape-telescope {
+    place-items: stretch;
+    padding: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .escape-stage *,
+  .escape-stage *::before {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

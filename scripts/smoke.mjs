@@ -17,6 +17,7 @@ const pagePaths = [
   "/games/tic-tac-toe",
   "/games/chess",
   "/games/janggi",
+  "/games/escape-room",
 ];
 
 function assert(condition, message) {

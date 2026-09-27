@@ -138,7 +138,7 @@ type GameShellProps = {
   title: string;
   kicker: string;
   description: string;
-  theme: "wood" | "forest" | "neon" | "berry" | "royal" | "ink";
+  theme: "wood" | "forest" | "neon" | "berry" | "royal" | "ink" | "midnight";
   status: ReactNode;
   score?: ReactNode;
   actions: ReactNode;
