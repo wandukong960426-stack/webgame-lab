@@ -10,12 +10,14 @@
 - `/games/tic-tac-toe` — 3×3 클래식, 5×5·4목 확장판
 - `/games/chess` — 체크메이트·스테일메이트·캐슬링·앙파상·프로모션
 - `/games/janggi` — 마·상의 멱, 포 발판, 궁성 대각선, 장군·외통, 한 수 쉼
+- `/games/escape-room` — 3D 방탈출 「별지기의 서재」: 8단계 퍼즐, 3단계 힌트, 여유·도전(30분) 모드, 자동 저장 ([설계 문서](docs/ESCAPE_ROOM.md))
 
 모든 게임은 모바일 전체화면과 효과음을 지원합니다. 요소 전체화면을 제한하는 iOS·일부 인앱 브라우저에서는 화면 고정형 전체화면으로 대체됩니다.
 
 ## 기술 구성
 
 - Next.js 16 App Router + React 19 + TypeScript
+- Three.js(WebGL 2) — 3D 방탈출 페이지에서만 동적으로 불러옴
 - Google OAuth 기반 `/admin` 콘텐츠·수익화 준비 관리
 - Neon PostgreSQL `games` 테이블
 - Vercel Git 배포

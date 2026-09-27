@@ -18,6 +18,7 @@
 .theme-berry { --game-accent: #d94b75; --game-bg: #f8e6ed; --game-board: #f6a7ba; }
 .theme-royal { --game-accent: #495c9b; --game-bg: #e9ecf6; --game-board: #e7d4ab; }
 .theme-ink { --game-accent: #8b4933; --game-bg: #f3e8d4; --game-board: #e7c88d; }
+.theme-midnight { --game-accent: #b8893a; --game-bg: #0b0f1a; --game-board: #141a2c; }
 
 .game-shell__topbar {
   display: flex;

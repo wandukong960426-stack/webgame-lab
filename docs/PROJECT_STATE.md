@@ -1,6 +1,6 @@
 # 딴짓모아 프로젝트 상태
 
-최종 갱신: 2026-09-18
+최종 갱신: 2026-09-27
 
 ## 현재 기준점
 
@@ -9,7 +9,7 @@
 | 공식 도메인 | `https://ttanjitmoa.com` |
 | 실제 운영본 | ChatGPT Sites 계열 |
 | GitHub 저장소 | `wandukong960426-stack/webgame-lab` |
-| GitHub 코드 | 별도 Next.js 16 버전 |
+| GitHub 코드 | 별도 Next.js 16 버전 (보드·퍼즐 6종 + 3D 방탈출) |
 | 기본 브랜치 | `main` |
 | 자동 검증 | PR에서 TypeScript, Production build, smoke test |
 | 운영 전환 승인 | 없음 |
@@ -22,7 +22,7 @@
 현재 확인된 핵심 차이는 다음과 같다.
 
 - Sites 운영본: 8종 게임, 오늘의 도전, 전술 36문제, 게임 가이드, 6개 언어
-- GitHub 버전: Next.js 기반 6종 게임
+- GitHub 버전: Next.js 기반 6종 게임 + GitHub 전용 신규 3D 방탈출(`/games/escape-room`, 브랜치 `claude/online-escape-game-analysis-ms0kr6`, `main` 병합 전)
 - GitHub 버전에는 미니 스도쿠, 지뢰찾기, 오늘의 도전, 전술 콘텐츠, 완전한 다국어 동등성이 아직 없다.
 - 기능 이관과 공식 도메인 전환이 끝나기 전에는 두 코드베이스를 같은 제품 상태로 보고하지 않는다.
 

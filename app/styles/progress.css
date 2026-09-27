@@ -96,6 +96,7 @@
 .resume-card--berry .resume-card__symbol { background: #ee6e8d; color: #4b1630; }
 .resume-card--royal .resume-card__symbol { background: #283559; color: #f4dfad; }
 .resume-card--ink .resume-card__symbol { background: #e9d9bd; color: #412e24; }
+.resume-card--midnight .resume-card__symbol { background: #111a33; color: #f1d38c; }
 
 .resume-card__copy {
   display: grid;
