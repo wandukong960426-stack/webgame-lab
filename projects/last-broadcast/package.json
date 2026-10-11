@@ -1,0 +1,18 @@
+{
+  "name": "last-broadcast",
+  "version": "2.0.0",
+  "private": true,
+  "description": "마지막 송출 — 2인 협동 추리게임 개선판. 딴짓모아 Next.js 사이트와 분리된 독립 실행본이며 배포 대상이 아니다.",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "test": "node checks/engine.test.cjs",
+    "qa": "node checks/browser-qa.mjs",
+    "qa:dist": "QA_FILE=dist/last-broadcast.html node checks/browser-qa.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "1.56.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

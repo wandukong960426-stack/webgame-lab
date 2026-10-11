@@ -6,11 +6,26 @@
 
 | 담당 | 브랜치 | 작업 | 수정 예정 파일 | 상태 |
 |---|---|---|---|---|
-| 없음 | - | - | - | 대기 |
+| Claude | `claude/game-quality-improvement-1qqat7` | 「마지막 송출」 추리게임 개선판 (독립 폴더, 사이트 미연결) | `projects/last-broadcast/**`, `docs/AI_HANDOFF.md` | 검증 중 (PR 미생성) |
 
 상태 값: `계획`, `작업 중`, `검증 중`, `PR 열림`, `차단됨`
 
 ## Handoff record
+
+### 「마지막 송출」 플레이 품질 전면 개선
+
+- 담당 AI: Claude
+- 목표: 사용자가 첨부한 「마지막 송출」 원본(별도 배포본)을 실제로 플레이할 수 있는 추리게임으로 재제작. 추리 깊이·증거 조사·2인 협동·연출 보강
+- 브랜치: `claude/game-quality-improvement-1qqat7`
+- PR: 아직 없음 (사용자 요청 시 생성)
+- 변경 파일: `projects/last-broadcast/` 전체 신규 (`original/` 원본 보존, `improved/` 개선판, `dist/last-broadcast.html` 단일 실행본, `tools/`, `checks/`, `docs/`), 이 문서. 사이트 코드(`app/`, `components/`, `lib/`)·루트 `package.json`·배포 설정은 건드리지 않음
+- 구현 결과: 3막 사건 재설계, 증거 84개·조사 지점 39곳·인터뷰 24개, 공동 분석 6개(+음원 대조), 중간 결론 2회, 6문장 최종 보고서, 3단계 힌트, 2인(한 기기)·혼자 검수 모드, 저장 v2·손상 복구. 원격 멀티플레이는 범위 제외
+- 검증 명령과 결과: `projects/last-broadcast`에서 `npm test` 32/32, `npm run qa` 30/30, `npm run qa:dist` 30/30 (Chromium 141). 루트 `npm install`·`npm run typecheck`·`npm run build`·`npm run smoke` 통과 (빌드가 바꾼 `tsconfig.json`·`next-env.d.ts`·루트 `package-lock.json`은 되돌림)
+- 모바일·PC 확인: 자동 검사로 360/390/768/1024/1440px 가로 넘침·화면 밖 요소·터치 영역 확인, 캡처 육안 확인. 실기기 미확인
+- 확인하지 못한 항목: 사람 플레이테스트(시간·난이도), 실제 모바일 기기, Safari·Firefox, 화면 낭독기, 효과음 청감 (`projects/last-broadcast/docs/QA_REPORT.md`)
+- 위험·롤백: 독립 폴더라 사이트에 영향 없음. 폴더 삭제로 롤백
+- 다음 담당자가 할 일: 사람 2인 플레이테스트로 시간·난이도·힌트 조정, Safari·Firefox·실기기 확인, 공개 방식(판매 브랜드 사이트 등)은 사용자 결정 후 별도 작업
+- 배포 상태: 구현됨 · 자동검증 통과(로컬) · 병합 안 됨 · Preview/공식 도메인 해당 없음
 
 ### Claude GitHub 연결 확인
 
