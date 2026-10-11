@@ -6,11 +6,26 @@
 
 | 담당 | 브랜치 | 작업 | 수정 예정 파일 | 상태 |
 |---|---|---|---|---|
-| 없음 | - | - | - | 대기 |
+| Claude | `claude/mystery-trial-demo-enhancement-yzf2mc` | 재판 게임 체험판(사건 001 · 11분의 공백) 재미 보강 | `prototypes/trial-001/*`, `docs/AI_HANDOFF.md` | 검증 중 |
 
 상태 값: `계획`, `작업 중`, `검증 중`, `PR 열림`, `차단됨`
 
 ## Handoff record
+
+### 재판 게임 체험판 v5 · 재미 보강
+
+- 담당 AI: Claude
+- 목표: 사용자가 전달한 독립 HTML 체험판(사건 001 「11분의 공백」 v4)의 재미 보강
+- 브랜치: `claude/mystery-trial-demo-enhancement-yzf2mc`
+- PR: 아직 없음 (사용자 요청 시 생성)
+- 변경 파일: `prototypes/trial-001/index.html`, `prototypes/trial-001/README.md`, `docs/AI_HANDOFF.md`
+- 구현 결과: 7개 쟁점(보강이 정답인 쟁점 추가), 문서의 결론 문장 제거, 휴정 자원, 블랙박스 프레임 검증, 피고인 대면·자백 분기, 11분 복원 시간표, 두 축 칭호·결과 카드, 오프닝·화자 배지·타자 효과·효과음, 고난도 모드, 이미지 WebP 변환(5.7MB → 0.48MB). 상세는 `prototypes/trial-001/README.md`
+- 검증 명령과 결과: `npm install`, `npm run typecheck`, `npm run build`, `npm run smoke` 통과. Headless Chromium 플레이 스루 3경로(자백·유죄 / 고난도·무죄 / v4 저장 이어하기) 101개 단언 통과, 페이지·콘솔 오류 없음
+- 모바일·PC 확인: 헤드리스 1440×900, 390×844 스크린샷 확인
+- 확인하지 못한 항목: 실제 휴대폰 기기, iOS Safari, 스크린리더, Web Share API 실제 공유 동작, Codex 검토
+- 위험·롤백: `prototypes/`는 Next.js에서 서비스되지 않아 사이트 영향 없음. 되돌리려면 폴더 삭제
+- 다음 담당자가 할 일: 사용자 플레이 피드백 반영, 사이트 탑재 시 진상 문구 지연 로드와 경로 결정, 실제 기기 확인
+- 배포 상태: 구현됨 · 자동검증 통과(헤드리스) · 병합 안 됨 · Preview·공식 도메인 반영 없음
 
 ### Claude GitHub 연결 확인
 
