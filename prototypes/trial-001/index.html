@@ -112,6 +112,65 @@ dialog{border:1px solid #bfb19d;border-radius:6px;background:var(--paper);color:
 .cold-open button{color:#fff;border-color:#ffffff66;padding:11px 26px}
 .cold-open .cold-skip{position:absolute;top:14px;right:14px;font-size:12px;padding:7px 12px;z-index:1}
 @media(max-width:650px){.exam-check{columns:1}.cold-open h2{font-size:25px}.title-card strong{font-size:24px}.task-strip{flex-wrap:wrap}.dash-screen .dash-note{display:none}}
+
+/* v6: evidence file, sticky scene actions, readable sizes and contrast, touch-sized targets. */
+:root{--muted:#5f5d58}
+.eyebrow,.crumb,.tag,.bound-note,.navitem small,.step,.event-kicker,.event-options small,.sentencing label,.suspension,.suspension select,.debrief-stat small,.title-axes span,.recess,.slots small,.logline,.scrub-points button,.citations button,.paper-tools,.paper-tools button,.evidence-choice small,.connection .wire,.dialogue .who,.question-desk summary,.chapterbar button,.person-story header small,.person-story header .tag,.quotation small,.frame-steps button,.gapbar small{font-size:12px}
+.panel-note,.paper-meta,.field label span,.bottom-credit,.autosaved,.ev-next{font-size:12px;color:#625a50}
+.topbar .autosaved{color:#e8e1d4}
+.chapterbar b,.ev-no{color:#6e5d43}
+.recorded{color:#6e5d43}
+.slots li.unknown,.slots li.unknown time{color:#625a50}
+.scene-hint summary,.paper-tools button,.interaction .hint summary,.question-desk summary{min-height:32px;display:flex;align-items:center}
+.court-controls{position:sticky;bottom:0;z-index:6;margin-top:6px;padding:18px 0 12px;background:linear-gradient(#f4f0e700,var(--paper) 16px)}
+.court-controls .primary.blocked{background:#fffaf3;color:var(--red);border:1px dashed var(--red)}
+.judge-panel{scroll-margin-top:64px}
+.nav-group{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;margin-top:8px;padding:10px 4px 8px;border:0;border-bottom:1px solid var(--line);border-radius:0;text-align:left;min-height:44px}
+.nav-group strong{font:700 16px var(--serif)}
+.nav-group.active strong{color:var(--red)}
+.ev-list{list-style:none;padding:0;margin:4px 0 0;display:grid;gap:5px}
+.ev-item{display:flex;gap:8px;align-items:center;width:100%;text-align:left;padding:8px 9px;min-height:44px;font-size:13px;background:#fff6}
+.ev-item b{font:600 12px var(--serif);color:#6e5d43;min-width:28px}
+.ev-item span{flex:1;min-width:0}
+.ev-item i{font-style:normal;font-size:11px;color:#fff;background:var(--red);border-radius:10px;padding:1px 7px;white-space:nowrap}
+.ev-item.unread span{font-weight:700}
+.ev-item.active{border-color:#b66a5c;box-shadow:inset 3px 0 0 var(--red)}
+.ev-next{margin:6px 2px 0}
+.locker-tools{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.locker{list-style:none;padding:0;margin:12px 0;display:grid;gap:8px}
+.ev-card{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 14px;background:#fffaf0;border:1px solid var(--line);min-height:60px}
+.ev-card.unread{border-color:#c78b84;background:#fff4ec;box-shadow:inset 3px 0 0 var(--red)}
+.ev-no{font:600 13px var(--serif);min-width:34px}
+.ev-body{flex:1;min-width:0}
+.ev-body strong{display:block;font-size:15px}
+.ev-body small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.ev-state{font-size:12px;color:var(--muted);white-space:nowrap}
+.ev-card.unread .ev-state{color:var(--red);font-weight:700}
+.arrival{margin:16px 0 4px;border:1px solid #c9a98b;border-left:4px solid var(--red);background:#fff7ee;border-radius:4px;padding:4px 14px;animation:appear .5s ease both}
+.arrival-item{display:flex;align-items:center;gap:12px;padding:10px 0}
+.arrival-item+.arrival-item{border-top:1px solid var(--line)}
+.arrival-item>div{flex:1;min-width:0}
+.arrival-item strong{display:block;font-size:15px;margin-top:2px}
+.arrival-item small{display:block;font-size:12px;color:var(--muted)}
+.arrival-item button{flex-shrink:0}
+.back-court{margin-top:10px}
+.picker{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.pick{text-align:left;padding:10px 11px;background:#fffcf5}
+.pick strong{display:block;font-size:13px}
+.pick small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:12px;color:var(--muted);line-height:1.6;margin-top:3px}
+.pick.selected{border-color:var(--red);background:#efe0d4;box-shadow:inset 0 0 0 1px var(--red)}
+.picker-empty{grid-column:1/-1;font-size:13px;color:var(--muted);margin:0;padding:12px;border:1px dashed #c4ad93;background:#fffaf0}
+.picker-unread{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px;font-size:12px;color:var(--muted)}
+.picker-unread button{font-size:12px;padding:6px 10px}
+.action-grid button b{display:block;font-weight:600}
+.action-grid button small{display:block;font-size:12px;color:var(--muted);margin-top:3px;line-height:1.5}
+.mobile-tabs .dot{display:inline-grid;place-items:center;min-width:18px;height:18px;border-radius:9px;background:var(--red);color:#fff;font-size:11px;padding:0 5px;margin-left:3px;vertical-align:1px}
+@media(max-width:850px){.side{display:none}.court-controls{bottom:calc(58px + env(safe-area-inset-bottom))}}
+@media(max-width:650px){.picker{grid-template-columns:1fr}.court-frame{height:160px}.chapterbar{display:none}.task-strip{padding:9px 11px;gap:8px}}
+@media(pointer:coarse),(max-width:850px){button,select,summary,.scene-hint summary,.paper-tools button{min-height:44px}.scene-hint summary,.question-desk summary,.interaction .hint summary{display:flex;align-items:center}}
+.quotation{color:#625a50}
+.interaction>small,.board-header button,.ev-item i,.mobile-tabs .dot{font-size:12px}
+.task-strip small,.court-label small{font-size:12px}
 </style>
 </head>
 <body>
@@ -125,9 +184,9 @@ dialog{border:1px solid #bfb19d;border-radius:6px;background:var(--paper);color:
 </defs></svg>
 <header class="topbar"><div class="brand">딴짓모아<span>재판 게임</span></div><div class="steps" id="steps"></div><div class="row"><span id="saveState" class="autosaved" aria-live="polite">이 기기에 저장</span><button id="soundBtn" aria-pressed="false" title="효과음">소리 끔</button><button id="helpBtn">도움말 ?</button><button class="savebtn" id="saveBtn">임시저장</button></div></header>
 <section class="masthead"><div><div class="eyebrow">The judgment desk · episode 001</div><h1>사건 기록 데스크</h1><p>기록을 검토하고, 당신의 판단으로 판결을 완성하세요.</p></div><div class="case-intro"><h2>사건 001 · 11분의 공백</h2><p>늦은 밤, 주차장에서 발견된 한 사람.<br>사라진 11분은 무엇을 입증할 수 있을까.</p></div><div class="quotation">“ 기록은 말합니다.<br>그러나 판단은 당신의 몫입니다. ”<small id="judgeLabel">단독 재판부 · 담당 판사 미정</small></div></section>
-<main class="workspace" id="workspace"><aside class="side"><h2>사건 기록</h2><p class="muted tiny">증거의 의미를 확인하고<br>당신의 판단을 남기세요.</p><nav class="side-nav" id="sideNav" aria-label="사건 자료"></nav><div class="side-footer"><div class="row spread"><span>자료 검토</span><span id="readCount">0 / 10</span></div><div class="progress"><i id="readProgress" style="width:0"></i></div><div class="muted tiny" id="phaseLabel">공판 전</div><button class="full tiny" id="lawBtn" style="margin-top:12px">법률·양형기준 보기</button><button class="full tiny" id="restartBtn" style="margin-top:8px">처음부터 다시</button></div></aside><section class="center" id="center" aria-live="polite"></section><aside class="judge-panel" id="judgePanel"><div class="section-head row spread"><div><h2>판결문 작성</h2><p>무엇을 믿었고, 왜 그렇게 판단했습니까?</p></div><button id="guideBtn" class="tiny">작성 도움</button></div><div class="sentencing"><div class="sentence-top"><div><label>선고 내용</label><div class="verdict-switch"><button id="guiltyBtn" data-verdict="guilty">유죄</button><button id="innocentBtn" data-verdict="innocent">무죄</button></div></div><div><label for="kind">형의 종류</label><select id="kind" class="full"><option value="prison">징역</option><option value="fine">벌금</option></select></div></div><div id="punishmentControls"><div class="sentence-controls"><div id="monthsWrap"><label for="months">징역 · 개월</label><input id="months" type="number" min="1" max="84" step="1" value="8"></div><div id="fineWrap" class="hidden"><label for="fine">벌금 · 만 원</label><input id="fine" type="number" min="5" max="1000" step="1" value="300"></div><div><label for="region">검토할 양형 영역</label><select id="region"><option value="basic">기본 · 4~18개월</option><option value="mitigated">감경 · 2~10개월</option><option value="aggravated">가중 · 6~30개월</option></select></div></div><div class="suspension"><label class="row" style="margin:0;color:var(--ink)"><input type="checkbox" id="suspended">집행유예 검토</label><select id="suspendYears" aria-label="집행유예 기간"><option value="1">1년</option><option value="2" selected>2년</option><option value="3">3년</option><option value="4">4년</option><option value="5">5년</option></select></div></div><div class="bound-note" id="sentenceNote">아직 유무죄 판단을 선택하지 않았습니다.</div></div><div class="paper"><div class="paper-tools"><span>직접 작성 · 본문</span><button id="insertOrderBtn">선택한 주문 넣기 ↙</button><span id="characterCount">0자</span></div><div class="paper-body"><div class="paper-meta">딴짓모아 가상법정<br>사건 001 · 상해</div><div class="paper-title">판 결 문</div><div class="field"><label for="orderText">주문<span>내가 내리는 결론</span></label><textarea id="orderText" placeholder="피고인에 대한 주문을 직접 작성하세요." maxlength="1500"></textarea></div><div class="field"><label for="reasonText">증거에 대한 판단<span>인정한 사실과 근거</span></label><textarea id="reasonText" placeholder="어떤 증거를 믿었습니까? 반대되는 주장은 왜 받아들이지 않았습니까?" maxlength="6000" style="min-height:150px"></textarea><div class="citations" id="citations"></div></div><div class="field" id="sentencingField"><label for="sentenceText">양형의 이유<span>유죄일 때 작성</span></label><textarea id="sentenceText" placeholder="불리한 사정과 유리한 사정을 구분해 직접 작성하세요." maxlength="4000"></textarea></div><div class="sign">판사 <strong id="signName">________</strong></div></div></div><button class="primary full" id="reviewBtn">판결문 검토 <span style="float:right">→</span></button><div class="panel-note">작성한 문장은 자동으로 바뀌지 않습니다.</div></aside></main>
-<footer class="bottom-credit">가상 사건 · 심리 강화 체험판 v5 / 실존 사건의 판결문이 아닙니다. 법률·양형기준 참고일: 2026.10.11.</footer>
-<nav class="mobile-tabs" aria-label="모바일 화면 전환"><button id="mobileCourt">법정</button><button id="mobileRecords" class="on">사건 기록</button><button id="mobileJudgment">나의 판결문</button></nav>
+<main class="workspace" id="workspace"><aside class="side"><h2>사건 기록</h2><p class="muted tiny">증거의 의미를 확인하고<br>당신의 판단을 남기세요.</p><nav class="side-nav" id="sideNav" aria-label="사건 자료"></nav><div class="side-footer"><div class="row spread"><span>증거 열람</span><span id="readCount">0 / 1</span></div><div class="progress"><i id="readProgress" style="width:0"></i></div><div class="muted tiny" id="phaseLabel">공판 전</div><button class="full tiny" id="lawBtn" style="margin-top:12px">법률·양형기준 보기</button><button class="full tiny" id="restartBtn" style="margin-top:8px">처음부터 다시</button></div></aside><section class="center" id="center"></section><aside class="judge-panel" id="judgePanel"><div class="section-head row spread"><div><h2>판결문 작성</h2><p>무엇을 믿었고, 왜 그렇게 판단했습니까?</p></div><button id="guideBtn" class="tiny">작성 도움</button></div><div class="sentencing"><div class="sentence-top"><div><label>선고 내용</label><div class="verdict-switch"><button id="guiltyBtn" data-verdict="guilty">유죄</button><button id="innocentBtn" data-verdict="innocent">무죄</button></div></div><div><label for="kind">형의 종류</label><select id="kind" class="full"><option value="prison">징역</option><option value="fine">벌금</option></select></div></div><div id="punishmentControls"><div class="sentence-controls"><div id="monthsWrap"><label for="months">징역 · 개월</label><input id="months" type="number" min="1" max="84" step="1" value="8"></div><div id="fineWrap" class="hidden"><label for="fine">벌금 · 만 원</label><input id="fine" type="number" min="5" max="1000" step="1" value="300"></div><div><label for="region">검토할 양형 영역</label><select id="region"><option value="basic">기본 · 4~18개월</option><option value="mitigated">감경 · 2~10개월</option><option value="aggravated">가중 · 6~30개월</option></select></div></div><div class="suspension"><label class="row" style="margin:0;color:var(--ink)"><input type="checkbox" id="suspended">집행유예 검토</label><select id="suspendYears" aria-label="집행유예 기간"><option value="1">1년</option><option value="2" selected>2년</option><option value="3">3년</option><option value="4">4년</option><option value="5">5년</option></select></div></div><div class="bound-note" id="sentenceNote">아직 유무죄 판단을 선택하지 않았습니다.</div></div><div class="paper"><div class="paper-tools"><span>직접 작성 · 본문</span><button id="insertOrderBtn">선택한 주문 넣기 ↙</button><span id="characterCount">0자</span></div><div class="paper-body"><div class="paper-meta">딴짓모아 가상법정<br>사건 001 · 상해</div><div class="paper-title">판 결 문</div><div class="field"><label for="orderText">주문<span>내가 내리는 결론</span></label><textarea id="orderText" placeholder="피고인에 대한 주문을 직접 작성하세요." maxlength="1500"></textarea></div><div class="field"><label for="reasonText">증거에 대한 판단<span>인정한 사실과 근거</span></label><textarea id="reasonText" placeholder="어떤 증거를 믿었습니까? 반대되는 주장은 왜 받아들이지 않았습니까?" maxlength="6000" style="min-height:150px"></textarea><div class="citations" id="citations"></div></div><div class="field" id="sentencingField"><label for="sentenceText">양형의 이유<span>유죄일 때 작성</span></label><textarea id="sentenceText" placeholder="불리한 사정과 유리한 사정을 구분해 직접 작성하세요." maxlength="4000"></textarea></div><div class="sign">판사 <strong id="signName">________</strong></div></div></div><button class="primary full" id="reviewBtn">판결문 검토 <span style="float:right">→</span></button><div class="panel-note">작성한 문장은 자동으로 바뀌지 않습니다.</div></aside></main>
+<footer class="bottom-credit">가상 사건 · 심리 강화 체험판 v6 / 실존 사건의 판결문이 아닙니다. 법률·양형기준 참고일: 2026.10.11.</footer>
+<nav class="mobile-tabs" aria-label="모바일 화면 전환"><button id="mobileCourt" class="on">법정</button><button id="mobileRecords">증거 파일</button><button id="mobileJudgment">나의 판결문</button></nav>
 <div id="toast" class="toast" role="status"></div>
 <dialog id="welcomeModal"><div class="welcome"><div class="eyebrow">딴짓모아 · 재판 게임</div><h2>오늘, 당신이 판사입니다.</h2><div class="welcome-case"><span class="tag red">사건 001</span><h3 style="margin-top:9px">11분의 공백</h3><p style="margin:0">누군가는 그를 가해자라 부릅니다.<br>그는 사람을 구했을 뿐이라고 말합니다.</p></div><p class="notice">사건의 진실은 이미 정해져 있습니다. 증거를 살펴 판결하세요. 실제 경위는 선고 뒤 공개됩니다.</p><label for="judgeName">판사 이름</label><input id="judgeName" maxlength="16" placeholder="게임에서 사용할 이름" autocomplete="off"><small>이름과 작성 내용은 이 브라우저에만 저장됩니다.</small><label class="hard-toggle" for="hardMode"><input type="checkbox" id="hardMode">고난도 재판 · 판단 도움과 단서 없이, 휴정 1회</label><div id="collection" class="collection"></div><button class="primary full" id="startBtn">법정 입장 <span style="float:right">→</span></button><button class="full hidden" id="resumeBtn" style="margin-top:8px">이전 재판 이어하기</button><small>4개 장 · 7개 쟁점 · 11분 복원 · 영상 프레임 검증 · 피고인 대면 · 진상과 후일담</small></div></dialog>
 <dialog id="modal"><div class="modal-head"><h2 id="modalTitle"></h2><button id="closeModal" aria-label="닫기">×</button></div><div class="modal-body" id="modalBody"></div><div class="modal-actions" id="modalActions"></div></dialog>
@@ -166,17 +225,17 @@ const STAGES=[
 ['인정신문','피고인 · 서도윤','서도윤은 이름을 말한 뒤 잠깐 멈춥니다. 재판장은 공소장에 기재된 인적 사항과 같은 사람인지 확인합니다. 방청석의 어머니가 고개를 들었다가 다시 숙입니다.','서도윤, 서른네 살입니다. 창고에서 일하고 있습니다. 공소장에 적힌 사람은 제가 맞습니다.','인정신문은 신원 확인입니다. 이 답변만으로 공소사실을 인정한 것이 아닙니다.','공소사실 확인'],
 ['검사의 모두진술','검사','검사는 메시지 출력물 한 장을 들어 보입니다. 강조 표시된 문장은 하나입니다. “오늘은 반드시 끝내자.” 검사 책상에는 피해자의 진술조서와 혈흔 감정서가 함께 놓여 있습니다.','피고인은 피해자에게 빌려준 돈을 돌려받지 못해 다툼이 있었습니다. 9월 14일 밤 해담빌딩 지하주차장에서 피해자의 머리를 가격해 약 3주간의 치료가 필요한 상해를 입혔다는 혐의입니다.','정확한 가격 시각은 특정되지 않았고, 기소된 시간 범위는 22:14~22:22입니다. 공소장에서 주장과 확인할 사실을 구분하세요.','피고인 측 모두진술'],
 ['피고인 측 모두진술','변호인','변호인은 피고인이 현장에 있었다는 점을 다투지 않습니다. 만남을 약속한 사실도, 화가 나 있었다는 사실도 인정합니다. 대신 혈흔 감정서의 마지막 문장을 손가락으로 짚습니다.','피고인은 도착했을 때 피해자가 이미 쓰러져 있었다고 진술합니다. 소매에 묻은 피는 지혈 중 생겼다는 것입니다. 돈 문제와 현장에 있었다는 사정만으로 가격 행위를 인정할 수 있는지 살펴 주십시오.','형사재판에서 설명의 그럴듯함과 증거로 입증된 사실을 구분해야 합니다.','피해자 증인신문'],
-['피해자의 주신문','피해자 · 윤태석','선서를 마친 윤태석이 다쳤던 머리 뒤쪽을 만집니다. 검사와 눈을 맞추다가 피고인석 쪽을 한 번 돌아봅니다. 목소리는 작지만 마지막 말은 단호합니다.','차 옆에서 기다리다 뒤에서 충격을 받았습니다. 정신을 차리니 도윤 씨가 제 옆에 있었어요. 만나기로 한 사람도 그 사람이었습니다. 저는 그 사람이 때렸다고 생각합니다.','피해자 진술이 공개됐습니다. 처음 수사기관에 말한 내용과 현재 증언을 비교할 수 있습니다.','반대신문 듣기'],
+['피해자의 주신문','피해자 · 윤태석','선서를 마친 윤태석이 다쳤던 머리 뒤쪽을 만집니다. 검사와 눈을 맞추다가 피고인석 쪽을 한 번 돌아봅니다. 목소리는 작지만 마지막 말은 단호합니다.','차 옆에서 기다리다 뒤에서 충격을 받았습니다. 정신을 차리니 도윤 씨가 제 옆에 있었어요. 만나기로 한 사람도 그 사람이었습니다. 저는 그 사람이 때렸다고 생각합니다.','피해자 진술이 증거 파일에 접수됐습니다. 처음 수사기관에 말한 내용과 현재 증언을 비교할 수 있습니다.','반대신문 듣기'],
 ['피해자의 반대신문','변호인','변호인이 응급실에서 작성된 진술 기록을 읽습니다. “누가 때렸는지는 보지 못했다.” 피해자는 기록 자체를 부인하지 않습니다. 다만 그날의 기억이 이후 더 분명해졌다고 말합니다.','충격을 받는 순간 피고인의 얼굴을 직접 보셨습니까? — 직접 보지는 못했습니다. 하지만 그 사람이 거기 있었고, 저를 만나러 온 것도 맞잖아요.','직접 관찰한 사실과 그 사실에서 도출한 추론을 나누어 확인하세요.','첫 쟁점 정리'],
-['첫 번째 쟁점','재판장','두 진술은 완전히 반대되는 말처럼 보일 수 있습니다. 그러나 “가격 순간 얼굴을 보지 못했다”와 “나중에 피고인을 보았다”는 동시에 사실일 수도 있습니다. 문제는 그 사이를 무엇으로 연결할 수 있는가입니다.','피해자가 기억하는 장면과, 범인이라고 판단한 이유를 구별해 기록하겠습니다. 추가로 확인할 질문이 있습니까?','피해자 진술 탭의 보충 질문을 사용할 수 있습니다. 확인한 내용은 판결문 인용 자료로 남길 수 있습니다.','영상 기록으로 넘어가기'],
-['증거조사 · CCTV','검사','모니터에는 주차된 차들이 나타납니다. 타임라인을 22:14로 옮기자 화면이 끊깁니다. 다음 기록은 22:25입니다. 어느 쪽도 그 사이의 장면을 재생할 수 없습니다.','영상이 사라진 시간 안에 사건이 발생했고, 피고인이 현장에 진입했습니다. 그렇다고 이 공백 자체를 가격 장면으로 볼 수는 없습니다. 다른 자료와 함께 판단해야 합니다.','CCTV·119 신고·기타 증거가 공개됐습니다. 타임라인에서 기록의 공백을 직접 확인하세요.','출입 시각 대조'],
+['첫 번째 쟁점','재판장','두 진술은 완전히 반대되는 말처럼 보일 수 있습니다. 그러나 “가격 순간 얼굴을 보지 못했다”와 “나중에 피고인을 보았다”는 동시에 사실일 수도 있습니다. 문제는 그 사이를 무엇으로 연결할 수 있는가입니다.','피해자가 기억하는 장면과, 범인이라고 판단한 이유를 구별해 기록하겠습니다. 추가로 확인할 질문이 있습니까?','증거 파일의 피해자 진술에서 보충 질문을 할 수 있습니다. 확인한 내용은 판결문 인용 자료로 남길 수 있습니다.','영상 기록으로 넘어가기'],
+['증거조사 · CCTV','검사','모니터에는 주차된 차들이 나타납니다. 타임라인을 22:14로 옮기자 화면이 끊깁니다. 다음 기록은 22:25입니다. 어느 쪽도 그 사이의 장면을 재생할 수 없습니다.','영상이 사라진 시간 안에 사건이 발생했고, 피고인이 현장에 진입했습니다. 그렇다고 이 공백 자체를 가격 장면으로 볼 수는 없습니다. 다른 자료와 함께 판단해야 합니다.','CCTV 기록이 증거 파일에 접수됐습니다. 타임라인에서 기록의 공백을 직접 확인하세요.','출입 시각 대조'],
 ['차량 출입 기록','관리사무소 회신','차단기 기록에는 피고인 차량의 진입 시각이 22:16:08로 남아 있습니다. 검사는 공소사실의 시간 범위 안에 들어온 기록이라고 강조합니다. 변호인은 출입 기록의 적용 범위를 확인합니다.','차량 차단기는 지하층으로 들어오는 차량을 기록합니다. 비상계단으로 내려오는 사람은 기록하지 않습니다. 그 시간 주차장에 피고인만 있었다고 확인해 드릴 수는 없습니다.','차량이 들어온 시각과 실제 사건 장소에 도착한 시각도 동일하다고 단정할 수 없습니다.','영상 장애 사유 확인'],
-['관리기사의 증언','관리기사 · 정우석','정우석은 사건 다음 날 작성한 장애 보고서를 제출합니다. 전날에도 저장 장치의 경고가 있었고, 사고 당일 네 대의 카메라에서 같은 시간대의 기록이 끊겼다고 설명합니다.','해당 카메라만 선택적으로 지워진 것은 아니었습니다. 저장 장치에 오류 로그가 남아 있습니다. 다만 원래 없어진 영상을 되살리지는 못했습니다. 누가 그 안에서 무엇을 했는지는 모릅니다.','추가 기록 탭에서 장애 보고서를 열람할 수 있습니다. 기계 장애의 설명은 사람의 행위를 입증하는 설명과 다릅니다.','새 목격자의 증언'],
-['청소 담당자의 주신문','증인 · 오미란','오미란은 지하층 청소 수레를 밀고 있었습니다. 금속성 소리가 나서 돌아봤을 때, 차들 사이로 한 사람이 몸을 낮추는 모습이 보였다고 말합니다. 검사는 손으로 도면의 거리를 짚습니다.','세차 물품이 넘어지는 것 같은 소리가 났어요. 돌아보니 누군가 허리를 굽히고 있었습니다. 가까이 가진 않았고, 그 사람 얼굴도 제대로 못 봤습니다.','목격자 기록이 공개됐습니다. 무엇을 봤는지와 무엇을 보지 못했는지를 나누어 읽으세요.','목격 조건 확인'],
+['관리기사의 증언','관리기사 · 정우석','정우석은 사건 다음 날 작성한 장애 보고서를 제출합니다. 전날에도 저장 장치의 경고가 있었고, 사고 당일 네 대의 카메라에서 같은 시간대의 기록이 끊겼다고 설명합니다.','해당 카메라만 선택적으로 지워진 것은 아니었습니다. 저장 장치에 오류 로그가 남아 있습니다. 다만 원래 없어진 영상을 되살리지는 못했습니다. 누가 그 안에서 무엇을 했는지는 모릅니다.','증거 파일에 접수된 장애 보고서를 열람할 수 있습니다. 기계 장애의 설명은 사람의 행위를 입증하는 설명과 다릅니다.','새 목격자의 증언'],
+['청소 담당자의 주신문','증인 · 오미란','오미란은 지하층 청소 수레를 밀고 있었습니다. 금속성 소리가 나서 돌아봤을 때, 차들 사이로 한 사람이 몸을 낮추는 모습이 보였다고 말합니다. 검사는 손으로 도면의 거리를 짚습니다.','세차 물품이 넘어지는 것 같은 소리가 났어요. 돌아보니 누군가 허리를 굽히고 있었습니다. 가까이 가진 않았고, 그 사람 얼굴도 제대로 못 봤습니다.','목격자 기록이 증거 파일에 접수됐습니다. 무엇을 봤는지와 무엇을 보지 못했는지를 나누어 읽으세요.','목격 조건 확인'],
 ['청소 담당자의 반대신문','변호인','증인이 서 있던 곳과 사건 위치 사이에는 기둥 두 개가 있습니다. 그녀는 자신의 시야가 차량에 가렸다는 점을 인정합니다. 사람을 때리는 동작을 보았는지 질문받자 곧바로 고개를 젓습니다.','제가 본 건 몸을 낮춘 자세입니다. 쓰러진 사람을 일으키는 건지, 다른 행동인지 판단할 수 없어요. 경찰에게도 누군지 모르겠다고 했습니다.','몸을 숙인 자세는 여러 행동과 양립할 수 있습니다. 이를 곧바로 가해 동작으로 바꾸어 기록하지 마세요.','혈흔 감정 검토'],
 ['혈흔 감정인의 설명','감정인 · 이정민','감정인은 소매의 얼룩 위치를 설명합니다. DNA형은 피해자와 일치합니다. 검사는 그것이 피고인과 피해자 사이의 접촉을 보여준다고 말하고, 변호인은 접촉의 종류를 묻습니다.','제출된 시료에서 피해자의 혈액이 확인됩니다. 하지만 이 시료와 감정 방법만으로 가격할 때 묻었는지, 상처를 누르면서 묻었는지를 구별할 수는 없습니다.','접촉의 존재와 가해 행위는 별도 쟁점입니다. “피해자의 피가 묻었다”는 사실을 삭제할 필요도, 그 이상으로 부풀릴 필요도 없습니다.','신고 기록 확인'],
 ['119 신고 기록','법정에서 확인한 녹취록','22:22에 서도윤의 휴대전화로 접수된 신고입니다. 상담원이 상처를 누르라고 말하자 신고자는 이미 자신의 옷으로 누르고 있다고 답합니다. 변호인은 바로 이 문장을 반복해서 읽습니다.','검사: 신고와 구조가 있었다는 사실은 다투지 않습니다. 그러나 먼저 범행한 사람이 뒤이어 신고했을 가능성까지 배제하는 것은 아닙니다.','신고 기록을 피고인에게 유리하게 볼 수는 있어도, 기록이 직접 보여주는 범위를 넘어서지는 않아야 합니다.','진료 기록 검토'],
-['진료 기록의 한계','진료기록에 대한 회신','진료 기록에는 두피 열상과 타박상, 치료 예상 기간이 적혀 있습니다. 주차장 바닥에 머리가 부딪힌 것인지 다른 물체에 맞은 것인지, 기록만으로 특정할 수 있는지도 질문했습니다.','해당 손상 소견만으로 정확한 가해 방식과 행위자를 특정할 수 없습니다. 진료 기록에 적힌 “폭행 후 내원”은 당시 전달받은 경위이며, 의료진이 현장을 목격했다는 뜻은 아닙니다.','추가 기록의 진료 회신을 확인하세요. 피해가 있었다는 사실과 누가 피해를 발생시켰는지는 구분됩니다.','증거를 교차 확인'],
+['진료 기록의 한계','진료기록에 대한 회신','진료 기록에는 두피 열상과 타박상, 치료 예상 기간이 적혀 있습니다. 주차장 바닥에 머리가 부딪힌 것인지 다른 물체에 맞은 것인지, 기록만으로 특정할 수 있는지도 질문했습니다.','해당 손상 소견만으로 정확한 가해 방식과 행위자를 특정할 수 없습니다. 진료 기록에 적힌 “폭행 후 내원”은 당시 전달받은 경위이며, 의료진이 현장을 목격했다는 뜻은 아닙니다.','증거 파일에 접수된 진료 회신을 확인하세요. 피해가 있었다는 사실과 누가 피해를 발생시켰는지는 구분됩니다.','증거를 교차 확인'],
 ['두 번째 쟁점','재판장','피해자는 분명 다쳤습니다. 피고인이 현장에 있었고 접촉한 것도 확인됩니다. 하지만 각 기록에서 확인되는 사실들을 이어 붙일 때, 중간에 어떤 추론이 들어가는지 드러내야 합니다.','공백을 다른 증거로 보완할 수 있는지 보겠습니다. 목격자가 본 자세, 혈흔, 신고를 각각 따로 보았을 때와 함께 보았을 때 무엇이 달라집니까?','기록을 확인하면 공판 화면에 자료를 연결하는 보충 질문이 열립니다.','두 사람의 관계로'],
 ['메시지의 앞뒤','검사와 변호인','검사는 돈을 돌려받지 못한 피고인의 감정을 강조합니다. 변호인은 잘린 대화의 다음 문장을 모니터에 띄웁니다. 빌려간 돈을 언제 갚을지 날짜라도 정하자는 내용입니다.','검사: 채무 다툼은 범행 동기로 고려할 수 있습니다. 변호인: 돈을 요구하는 대화와 실제 폭력을 행사했다는 사실은 같은 것이 아닙니다. 전체 문맥을 보아 주십시오.','두 사람은 6년 전 같은 물류창고에서 일하던 동료였습니다. 300만 원은 석 달 전 급한 임대료를 돕기 위해 빌려준 돈이라는 데 다툼이 없습니다.','피고인신문 진행'],
 ['피고인신문 · 그날의 방문','피고인 · 서도윤','서도윤은 그날 어머니의 보증금을 마련해야 해서 돈을 돌려받으려 했다고 말합니다. 그가 목소리를 높인 사실을 부인하지 않자 검사도 그 대목을 다시 확인합니다.','화가 나 있었습니다. 몇 번이나 날짜를 미뤘으니까요. 하지만 내려가 보니 사람이 바닥에 있었어요. 이름을 부르고, 머리에서 피가 나서 제 옷으로 눌렀습니다.','감정이나 사정에 공감하는 것과 진술을 사실로 인정하는 것은 다릅니다. 다른 자료와 대조하세요.','검사의 추궁'],
@@ -189,7 +248,7 @@ const STAGES=[
 ['양형자료의 제출','검사와 변호인','양형자료에는 처벌 전력, 진료비, 일부 지급 내역, 피해자 의견서가 들어 있습니다. 피해자는 약 3주간 치료를 받았으며 후유장애 자료는 제출되지 않았습니다. 서도윤에게는 형사처벌 전력이 없습니다.','검사: 피해 회복이 충분히 이루어지지 않았습니다. 변호인: 초범이고 치료비 일부를 지급했습니다. 피고인에게 유리한 사정도 함께 검토해 주십시오.','체크한 개수로 형량을 자동 계산하지 않습니다. 유죄를 인정한 경우에만 양형 이유에 반영합니다.','피해자 측 의견'],
 ['피해자 측 의견서','윤연희 · 피해자의 동생','윤연희는 오빠의 병원 진료에 동행하며 일을 몇 차례 빠졌다고 적었습니다. 진단서의 치료 기간과 일상으로 돌아오는 데 걸린 시간이 같지 않았다는 문장이 눈에 들어옵니다.','오빠가 다친 뒤 혼자 주차장에 내려가지 못했습니다. 저도 퇴근 후 병원에 들렀습니다. 누구를 처벌하느냐만큼, 저희가 겪은 일이 없던 일이 되지 않았으면 합니다.','이 의견서는 피해 이후의 상황에 관한 자료입니다. 작성자는 가격 장면의 목격자가 아닙니다.','피고인 측 의견'],
 ['피고인 측 의견서','한여정 · 피고인의 어머니','방청석의 여성이 제출한 편지는 짧습니다. 아들이 일을 쉬게 된 뒤 집안 생활비가 줄었고, 사건 이후 이웃과 인사하기도 어려워졌다는 내용입니다. 편지에는 범행 순간에 관한 직접 경험은 없습니다.','아들이 무슨 일을 했는지 제가 보지는 못했습니다. 다만 재판장님이 기록을 끝까지 살펴 주셨으면 합니다. 결과가 어떻게 나오든 아들이 책임져야 할 일과 그렇지 않은 일을 구분해 주십시오.','가족의 어려움이 유무죄를 입증하지는 않습니다. 인정할 사정과 그 의미를 구분하세요.','피해 회복 자료 대조'],
-['회복과 합의의 차이','재판장','치료비 영수증은 180만 원, 지급 확인은 60만 원입니다. 합의서와 처벌을 원하지 않는다는 문서는 없습니다. 당사자들이 주고받은 돈의 의미도 같지 않습니다.','피해 회복이 어느 정도 이루어졌는지, 합의가 성립했는지, 처벌불원의 의사가 있는지는 각각 확인하겠습니다. 단순히 돈을 보냈다는 문장 하나로 모두를 대신하지 않겠습니다.','추가 기록의 지급 내역과 양형자료를 함께 읽을 수 있습니다.','검사의 구형'],
+['회복과 합의의 차이','재판장','치료비 영수증은 180만 원, 지급 확인은 60만 원입니다. 합의서와 처벌을 원하지 않는다는 문서는 없습니다. 당사자들이 주고받은 돈의 의미도 같지 않습니다.','피해 회복이 어느 정도 이루어졌는지, 합의가 성립했는지, 처벌불원의 의사가 있는지는 각각 확인하겠습니다. 단순히 돈을 보냈다는 문장 하나로 모두를 대신하지 않겠습니다.','증거 파일의 지급 내역과 양형자료를 함께 읽을 수 있습니다.','검사의 구형'],
 ['검사의 의견진술 · 구형','검사','검사는 기존 증거와 이번 공판에서 조사한 자료를 다시 묶습니다. 그리고 피해가 회복되지 않은 부분을 강조하며 최종 의견을 말합니다. 피해자는 방청석에서 손을 모으고 듣고 있습니다.','피고인의 범행이 인정된다고 보아 징역 1년을 구형합니다. 범행 동기와 현장 상황, 피해자의 진술을 종합하고 회복되지 않은 피해를 고려해 주십시오.','구형은 검사의 요청입니다. 당신의 판결은 법률·증거·양형 사정에 근거해 별도로 내려야 합니다.','변호인의 최종 변론'],
 ['변호인의 최종 의견','변호인','변호인은 새 자료를 포함해 재판부가 검토한 기록의 범위와 피고인 특정의 근거를 마지막으로 짚습니다. 이어 유죄로 판단할 경우에 대비한 의견도 말하지만, 그것이 혐의를 인정한다는 의미는 아니라고 덧붙입니다.','무죄를 선고해 주십시오. 만약 유죄로 판단하시더라도, 범죄 전력이 없고 치료비를 일부 지급한 사정을 검토해 주십시오. 피고인이 부인한다는 이유만으로 반성하지 않는다고 단정하지 말아 주십시오.','무죄 주장과 예비적인 양형 의견은 구분해서 기록합니다.','피고인의 최후진술'],
 ['피고인의 최후진술','피고인 · 서도윤','피고인이 자리에서 일어납니다. 그는 피해자 쪽을 잠시 바라보다 다시 재판부를 향합니다. 판결을 기다리는 두 사람은 서로 다른 이유로 같은 말을 원하고 있습니다. 자신이 겪은 일을 제대로 봐 달라는 말입니다.','돈 때문에 화가 났던 건 맞습니다. 다친 사람을 보고 겁도 났습니다. 하지만 제가 하지 않은 행동까지 했다고 말할 수는 없습니다. 제가 한 일과 하지 않은 일을 구분해 주십시오.','이제 증거 제출이 끝났습니다. 요청하고 조사한 자료로 판단하세요. 사건의 실제 경위는 선고 뒤 공개되지만, 진실을 확인할 자료는 공판에서 요청할 수 있었습니다.','변론 종결 · 판결 작성'],
@@ -410,7 +469,7 @@ const HEARING_EVENTS=[
  {id:'submission',stage:21,kicker:'새 자료가 도착했습니다',title:'11분 밖에 있던 카메라',
   intro:'검찰 측 실무자가 봉투를 건넵니다. 관리사무소의 추가 연락을 받은 차량 소유자가 블랙박스 기록을 제출했습니다. 건물 CCTV와 별도로 작동하던 장치입니다. 처음 도착한 것은 누군가 몸을 숙이는 8초짜리 발췌본뿐입니다.',
   choices:[
-   {id:'original',label:'원본과 제출 경위를 함께 확인한다',sub:'소유자·수집 담당자의 확인서와 앞뒤 연속 구간을 받는다.',reply:'짧은 휴정 뒤 원본의 연속 구간, 수집 경위서, 장치 시각 비교표가 도착합니다. 양측에 같은 자료를 제공합니다. “추가 영상”에서 자료를 검토한 뒤 다음 공방으로 돌아오세요.'},
+   {id:'original',label:'원본과 제출 경위를 함께 확인한다',sub:'소유자·수집 담당자의 확인서와 앞뒤 연속 구간을 받는다.',reply:'짧은 휴정 뒤 원본의 연속 구간, 수집 경위서, 장치 시각 비교표가 도착합니다. 양측에 같은 자료를 제공합니다. 증거 파일에 접수된 블랙박스 자료를 검토한 뒤 다음 공방으로 돌아오세요.'},
    {id:'excerpt',label:'발췌본부터 검토하고 양측 의견을 듣는다',sub:'원본 확인은 보류한 채 발췌본의 의미와 한계부터 확인한다.',reply:'발췌본에는 몸을 숙인 사람만 보이고 직전 동작과 얼굴은 드러나지 않습니다. 변호인은 “오미란의 증언과 마찬가지로 구조 장면일 수도 있다”고 말합니다. 원본의 확인 여부는 다음 공방에서 정할 수 있습니다.'}
   ]},
  {id:'clock',stage:22,kicker:'증거의 시각이 맞지 않습니다',title:'같은 밤, 서로 다른 시계',
@@ -757,7 +816,7 @@ const v4CardKnown=cardKnown;
 cardKnown=id=>id==='confession'?ensurePlay().confront?.result==='confessed':v4CardKnown(id);
 function confrontAvailable(){return videoInCase()&&!!state.events.clock&&state.events.clock!=='exclude'}
 function confrontPending(){return confrontAvailable()&&!ensurePlay().confront?.result}
-function confrontOptions(selected){const p=ensurePlay(),c=p.confront,used=new Set((c?.attempts||[]).map(a=>a.card)),opts=knownCards().filter(id=>id!=='confession').map(id=>[id,CARD_DATA[id].title]);if(videoAvailable('full'))[...p.frames].sort().forEach(n=>opts.push(['frame:'+n,`연속 구간 ${VIDEO_FRAMES[n][0]} · ${VIDEO_FRAMES[n][1]}`]));return '<option value="">제시할 기록을 고르세요</option>'+opts.map(([v,l])=>`<option value="${v}" ${v===selected?'selected':''} ${used.has(v)?'disabled':''}>${esc(l)}${used.has(v)?' · 제시함':''}</option>`).join('')}
+function confrontPicker(selected){const p=ensurePlay(),used=new Set((p.confront?.attempts||[]).map(a=>a.card)),frames=videoAvailable('full')?[...p.frames].sort().map(n=>['frame:'+n,`연속 구간 ${VIDEO_FRAMES[n][0]} · ${VIDEO_FRAMES[n][1]}`,VIDEO_FRAMES[n][2]]):[];return cardPicker('confront','defendant',selected,{exclude:['confession'],extra:frames,used})}
 function renderConfront(){const p=ensurePlay(),c=p.confront||{attempts:[]},locked=state.sealed||state.maxStage>23;
  let h=`<section class="interaction confrontation ${c.result==='confessed'?'cracked':''}" id="confrontation"><span class="eyebrow">피고인 대면 · 재판장 신문</span><h3>“제가 왔을 때 이미 쓰러져 있었습니다.”</h3><small>서도윤 · 119 신고와 법정에서 반복한 설명</small><div class="claim">재판장이 피고인에게 묻습니다. 이 설명과 맞지 않는 기록이 있습니까? 확보한 기록 가운데 하나를 직접 제시할 수 있습니다.</div>`;
  h+=c.attempts.map(a=>`<div class="exchange"><div class="speaker">재판장이 제시한 기록 · ${esc(a.title)}</div>${a.lines.map(([who,line])=>`<div class="speaker who-line">${esc(who)}</div><p>${esc(line)}</p>`).join('')}</div>`).join('');
@@ -765,7 +824,7 @@ function renderConfront(){const p=ensurePlay(),c=p.confront||{attempts:[]},locke
  if(c.result)return h+`<div class="recorded">${c.result==='skipped'?'피고인에게 기록을 제시하지 않았습니다.':'피고인은 기존 설명을 유지했습니다.'} 이 기록으로 심리를 계속합니다.</div></section>`;
  if(locked)return h+'<p style="margin-top:14px">이 단계에서 피고인 대면을 마치지 않았습니다.</p></section>';
  const costs=c.attempts[c.attempts.length-1]?.type==='wrong';
- return h+`<label for="confront-card">제시할 기록</label><select id="confront-card" data-confront-card>${confrontOptions(p.confrontDraft)}</select><button class="primary full" data-confront ${costs&&p.recess<=0?'disabled':''}>${costs?'다른 기록을 다시 제시한다 · 휴정 1회':'기록을 제시하고 답을 듣는다'}</button><button class="full tiny" data-confront-stop>${c.attempts.length?'더 묻지 않고 기존 진술을 기록한다':'제시하지 않고 다음 판단으로'}</button><small>연속 구간의 장면은 프레임 단위로 제시할 수 있습니다. 첫 제시는 휴정 없이 할 수 있습니다.</small></section>`}
+ return h+`<label>제시할 기록</label>${confrontPicker(p.confrontDraft)}<button class="primary full" data-confront ${costs&&p.recess<=0?'disabled':''}>${costs?'다른 기록을 다시 제시한다 · 휴정 1회':'기록을 제시하고 답을 듣는다'}</button><button class="full tiny" data-confront-stop>${c.attempts.length?'더 묻지 않고 기존 진술을 기록한다':'제시하지 않고 다음 판단으로'}</button><small>연속 구간의 장면은 프레임 단위로 제시할 수 있습니다. 첫 제시는 휴정 없이 할 수 있습니다.</small></section>`}
 function presentToDefendant(){const p=ensurePlay(),v=p.confrontDraft;if(!confrontPending()||state.stage!==23||state.maxStage>23||state.sealed)return;if(!v){toast('제시할 기록을 고르세요.');return}p.confront??={attempts:[],result:null};const c=p.confront;if(c.attempts.some(a=>a.card===v)){toast('이미 제시한 기록입니다. 다른 기록을 고르세요.');return}if(c.attempts[c.attempts.length-1]?.type==='wrong'&&!spendRecess())return;
  const frame=v.startsWith('frame:')?+v.slice(6):null,title=frame!==null?`연속 구간 ${VIDEO_FRAMES[frame][0]} · ${VIDEO_FRAMES[frame][1]}`:CARD_DATA[v]?.title||'기록';let type='wrong',lines;
  if(frame===2){type='confess';lines=CONFESSION}
@@ -852,7 +911,7 @@ start=()=>{const n=$('judgeName').value.trim();if(!n){toast('판사 이름을 �
 $('startBtn').onclick=()=>start();$('coldGo').onclick=closeColdOpen;$('coldSkip').onclick=closeColdOpen;
 $('sitBtn').addEventListener('click',()=>sfx('gavel'));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('coldOpen').classList.contains('hidden')){e.preventDefault();closeColdOpen()}});
-$('helpBtn').onclick=()=>modal('판사로서 사건을 진행하는 방법',`<p>진실은 이미 정해져 있습니다. 법정에 제출되는 기록과 그 해석은 당신의 질문·조사에 따라 달라집니다.</p><ol class="checklist"><li><b>주장 검토:</b> 주장에 맞는 근거 자료와 관계(반박·보강·입증 범위 제한)를 고르고 양측의 답변을 듣습니다. 모든 주장이 과장된 것은 아닙니다.</li><li><b>휴정:</b> 단서 보기, 판단 재검토, 피고인 대면의 재시도에 씁니다. 기본 3회, 고난도 1회입니다.</li><li><b>심증 보드 · 11분 복원:</b> 확인한 기록이 시간표에 채워집니다. 비어 있는 시간을 채울 자료를 찾아보세요.</li><li><b>추가 조사:</b> 관찰 위치나 현장 기록을 대조하면 자료 요청의 경로가 열립니다. 새 자료 없이도 판결할 수 있습니다.</li><li><b>영상 검증:</b> 연속 구간을 프레임 단위로 넘기며 시각·행동 순서·인물을 판단하고 결정적 장면을 지적합니다.</li><li><b>피고인 대면:</b> 확보한 기록을 피고인에게 직접 제시합니다. 무엇을 보여주느냐에 따라 대답이 달라집니다.</li><li><b>판결과 복기:</b> 선고 뒤 진상, 칭호, 놓친 경로를 확인하고 결과 카드를 저장할 수 있습니다.</li></ol><p>공판은 4개 장·32개 장면·7개 쟁점 검토·4개 절차 이벤트·3회 잠정 판단과 피고인 대면으로 구성됩니다.</p><p class="tiny muted">영상 화면은 검증조서를 바탕으로 한 위치 도해이며 실제 영상·녹음이 아닙니다. 효과음은 기본으로 꺼져 있습니다. 온라인 순위와 AI 판결문 채점은 없습니다. 진행 기록과 칭호는 이 기기의 브라우저에만 저장됩니다.</p>`,[['법률·양형기준',showLaw],['닫기',closeModal,true]]);
+$('helpBtn').onclick=()=>modal('판사로서 사건을 진행하는 방법',`<p>진실은 이미 정해져 있습니다. 법정에 제출되는 기록과 그 해석은 당신의 질문·조사에 따라 달라집니다.</p><ol class="checklist"><li><b>주장 검토:</b> 주장에 맞는 근거 자료와 관계(반박·보강·입증 범위 제한)를 고르고 양측의 답변을 듣습니다. 모든 주장이 과장된 것은 아닙니다.</li><li><b>휴정:</b> 단서 보기, 판단 재검토, 피고인 대면의 재시도에 씁니다. 기본 3회, 고난도 1회입니다.</li><li><b>증거 파일:</b> 공판이 진행되면 자료가 한 건씩 접수되어 번호순으로 쌓입니다. 새 자료에는 표시가 붙고, 장면 안의 「열람하기」로 바로 열 수 있습니다.</li><li><b>심증 보드 · 11분 복원:</b> 확인한 기록이 시간표에 채워집니다. 비어 있는 시간을 채울 자료를 찾아보세요.</li><li><b>추가 조사:</b> 관찰 위치나 현장 기록을 대조하면 자료 요청의 경로가 열립니다. 새 자료 없이도 판결할 수 있습니다.</li><li><b>영상 검증:</b> 연속 구간을 프레임 단위로 넘기며 시각·행동 순서·인물을 판단하고 결정적 장면을 지적합니다.</li><li><b>피고인 대면:</b> 확보한 기록을 피고인에게 직접 제시합니다. 무엇을 보여주느냐에 따라 대답이 달라집니다.</li><li><b>판결과 복기:</b> 선고 뒤 진상, 칭호, 놓친 경로를 확인하고 결과 카드를 저장할 수 있습니다.</li></ol><h3>자주 나오는 말</h3><ul class="checklist"><li><b>반박</b> 주장이 틀렸음을 보여주는 자료 · <b>보강</b> 주장을 그대로 뒷받침하는 자료 · <b>입증 범위 제한</b> 일부는 맞지만 주장만큼 증명하지 못하는 자료</li><li><b>주문</b> 판결의 결론(유무죄와 형) · <b>양형</b> 유죄일 때 형의 종류와 크기를 정하는 일 · <b>집행유예</b> 형의 집행을 일정 기간 미루는 것</li></ul><p>공판은 4개 장·32개 장면·7개 쟁점 검토·4개 절차 이벤트·3회 잠정 판단과 피고인 대면으로 구성됩니다.</p><p class="tiny muted">영상 화면은 검증조서를 바탕으로 한 위치 도해이며 실제 영상·녹음이 아닙니다. 효과음은 기본으로 꺼져 있습니다. 온라인 순위와 AI 판결문 채점은 없습니다. 진행 기록과 칭호는 이 기기의 브라우저에만 저장됩니다.</p>`,[['법률·양형기준',showLaw],['처음부터 다시',restart],['닫기',closeModal,true]]);
 
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset,p=ensurePlay();
  if(b.id==='soundBtn'){prefs.sound=!prefs.sound;savePrefs();renderSoundBtn();sfx('tick');return}
@@ -867,9 +926,96 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
  if(d.confront!==undefined)presentToDefendant();
  if(d.confrontStop!==undefined&&confrontPending()&&state.stage===23&&state.maxStage<=23){p.confront??={attempts:[],result:null};p.confront.result=p.confront.attempts.length?'denied':'skipped';save();renderCenter()}
 });
-document.addEventListener('change',e=>{if(e.target.dataset?.confrontCard!==undefined&&!state.sealed){ensurePlay().confrontDraft=e.target.value;save()}});
 document.addEventListener('input',e=>{if(e.target.dataset?.frameRange!==undefined){ensurePlay().frameIdx=+e.target.value;save();refreshFrame()}});
 renderSoundBtn();renderCollection();
+
+// v6: records arrive scene by scene and pile up in one numbered evidence file instead of every category listed from the start.
+const EVIDENCE=[
+ {id:'indictment',tab:'indictment',title:'공소장',sub:'혐의와 양측의 입장',at:()=>0},
+ {id:'testimony',tab:'testimony',title:'피해자 진술',sub:'초기 진술 · 법정 증언',at:()=>4},
+ {id:'message',tab:'evidence',doc:0,title:'메시지 전체 대화',sub:'사건 당일 주고받은 문자',at:()=>state.events.context==='now'?6:7},
+ {id:'cctv',tab:'cctv',title:'CCTV 기록',sub:'주차장 영상 · 11분의 공백',at:()=>7},
+ {id:'access',tab:'evidence',doc:2,title:'차량 출입 기록',sub:'차단기 통과 시각',at:()=>8},
+ {id:'maintenance',tab:'supplement',supp:'maintenance',title:'저장 장치 장애 보고서',sub:'관리기사 정우석 작성',at:()=>9},
+ {id:'witnesses',tab:'witnesses',title:'목격자 기록 · 오미란',sub:'청소 담당자의 증언',at:()=>10},
+ {id:'forensic',tab:'evidence',doc:1,title:'혈흔 감정서',sub:'피고인 소매의 혈흔',at:()=>12},
+ {id:'call',tab:'call',title:'119 신고 기록',sub:'접수 기록과 녹취록',at:()=>13},
+ {id:'medical',tab:'supplement',supp:'medical',title:'진료 기록 회신',sub:'상처와 치료 기간',at:()=>14},
+ {id:'parking',tab:'parking',title:'차량 배치도',sub:'시야 · 주차 위치',at:()=>20},
+ {id:'video_excerpt',tab:'newvideo',video:'excerpt',title:'블랙박스 8초 발췌본',sub:'B3-17 차량 소유자 제출',at:()=>videoInCase()?21:null},
+ {id:'video_source',tab:'newvideo',video:'source',title:'영상 수집 경위서',sub:'원본 제출 경위',at:()=>videoInCase()&&state.originalRequested?21:null},
+ {id:'video_clock',tab:'newvideo',video:'clock',title:'장치 시각 비교표',sub:'두 시계의 대조',at:()=>videoInCase()&&state.originalRequested?21:null},
+ {id:'video_full',tab:'newvideo',video:'full',title:'블랙박스 연속 구간',sub:'프레임 단위 검증',at:()=>videoInCase()&&state.originalRequested?21:null},
+ {id:'confession',title:'피고인의 공판 중 자백',sub:'피고인 대면 기록',at:()=>ensurePlay().confront?.result==='confessed'?23:null},
+ {id:'sentencing',tab:'sentencing',title:'양형자료',sub:'피해 · 전과 · 회복 내역',at:()=>24},
+ {id:'payment',tab:'supplement',supp:'payment',title:'치료비 지급 내역',sub:'송금 기록',at:()=>24},
+ {id:'family',tab:'supplement',supp:'family',title:'두 가족의 의견서',sub:'사건 이후의 생활',at:()=>25}
+];
+const RELATION_HELP={contradiction:'주장이 틀렸음을 보여준다',support:'주장을 그대로 뒷받침한다',limit:'일부는 맞지만 주장만큼 증명하지 못한다'};
+DATA.evidence.title='메시지·감정서·출입 기록';DATA.supplement.title='보고서·진료·지급 기록';
+const evById=id=>EVIDENCE.find(e=>e.id===id);
+function evArrived(id){const e=evById(id),at=e?.at();return at!=null&&state.maxStage>=at}
+function arrivedEvidence(){return EVIDENCE.filter(e=>evArrived(e.id)).sort((a,b)=>a.at()-b.at()||EVIDENCE.indexOf(a)-EVIDENCE.indexOf(b))}
+function evRead(e){return e.id==='confession'||(CARD_DATA[e.id]?cardKnown(e.id):state.read.includes(e.tab))}
+function evActive(e){return state.tab===e.tab&&(e.doc===undefined||state.evidence===e.doc)&&(!e.supp||state.supplement===e.supp)&&(!e.video||state.videoDoc===e.video)}
+function openEvidence(id){const e=evById(id);if(!e||!evArrived(id))return;if(id==='confession'){const lines=(ensurePlay().confront?.attempts||[]).filter(a=>a.type==='confess').flatMap(a=>a.lines);modal('피고인의 공판 중 자백',lines.map(([w,l])=>`<p><b>${esc(w)}</b><br>${esc(l)}</p>`).join(''),[['닫기',closeModal,true]]);return}if(e.doc!==undefined)state.evidence=e.doc;if(e.supp)state.supplement=e.supp;if(e.video)state.videoDoc=e.video;setTab(e.tab)}
+available=tab=>['court','board','notes','locker'].includes(tab)||(tab==='events'?state.maxStage>=6:EVIDENCE.some(e=>e.tab===tab&&evArrived(e.id)));
+
+// Picking evidence shows each record's summary instead of a bare dropdown of titles.
+function cardPicker(kind,owner,selected,{exclude=[],extra=[],used=new Set()}={}){const opts=[...knownCards().filter(id=>!exclude.includes(id)).map(id=>[id,CARD_DATA[id].title,CARD_DATA[id].text]),...extra],unread=arrivedEvidence().filter(e=>CARD_DATA[e.id]&&!evRead(e)&&!exclude.includes(e.id));
+ return `<div class="picker">${opts.map(([id,t,txt])=>`<button class="pick ${id===selected?'selected':''}" aria-pressed="${id===selected}" data-pick-kind="${kind}" data-pick-owner="${owner}" data-pick="${id}" ${used.has(id)||state.sealed?'disabled':''}><strong>${esc(t)}${used.has(id)?' · 제시함':''}</strong><small>${esc(txt)}</small></button>`).join('')||'<p class="picker-empty">아직 열람한 자료가 없습니다. 증거 파일에서 자료를 열면 이곳에 추가됩니다.</p>'}</div>${unread.length?`<div class="picker-unread"><span>아직 열람하지 않은 자료</span>${unread.map(e=>`<button data-open-ev="${e.id}">${esc(e.title)} 열람 ↗</button>`).join('')}</div>`:''}`}
+function withRelationHelp(h){return h.replace(/(data-(issue|link)-relation="(\w+)"(?: data-value="(\w+)")?[^>]*>)([^<]+)<\/button>/g,(m,open,kind,first,v,label)=>`${open}<b>${label}</b><small>${RELATION_HELP[kind==='issue'?v:first]||''}</small></button>`)}
+const v5RenderIssue=renderIssue;
+renderIssue=i=>{const draft=ensurePlay().drafts[i.id]||{};return withRelationHelp(v5RenderIssue(i).replace('<button class="tiny" data-tab="board">확보한 증거 카드 보기</button>','').replace(/<label for="issue-card-[^"]+">근거 자료<\/label><select[^>]*>[\s\S]*?<\/select>/,()=>`<label>근거 자료 · 열람한 자료 가운데 고르세요</label>${cardPicker('issue',i.id,draft.card)}`))};
+const v5RenderCheckpoint=renderCheckpoint;
+renderCheckpoint=c=>v5RenderCheckpoint(c).replace(/<label for="belief-card-[^"]+">([^<]+)<\/label><select[^>]*>[\s\S]*?<\/select>/,(m,l)=>`<label>${l}</label>${cardPicker('belief',c.id,(ensurePlay().beliefDrafts[c.id]||{}).card)}`);
+const v5RenderBoard=renderBoard;
+renderBoard=()=>withRelationHelp(v5RenderBoard());
+const v5RenderSearch=renderSearch;
+renderSearch=()=>v5RenderSearch().replace('<section class="interaction">','<section class="interaction" id="searchDesk">');
+
+// What still has to be decided in this scene, in page order. The next button names it instead of failing silently.
+function courtBlocker(){if(state.sealed)return null;const p=ensurePlay(),i=issueAt(),c=checkpointAt(),e=eventAt(),s=state.stage;
+ if(e&&!eventChoice(e))return ['위 이벤트의 결정을 기록하세요','#eventAnchor'];
+ if(i&&!p.issues[i.id]&&state.maxStage<=i.stage)return ['위 쟁점에 근거를 제시하세요','#issue-'+i.id];
+ if(s===20&&!p.search&&state.maxStage<=20)return ['추가 조사 여부를 정하세요','#searchDesk'];
+ if(s===23&&confrontPending()&&state.maxStage<=23)return ['피고인 대면을 마치세요','#confrontation'];
+ if(c&&!p.beliefs[c.id]&&state.maxStage<=c.stage)return ['지금의 판단을 기록하세요','.checkpoint'];
+ return null}
+function renderArrivals(){const list=arrivedEvidence(),now=list.filter(e=>e.at()===state.stage);if(!now.length)return '';return `<section class="arrival" aria-label="새로 접수된 증거">${now.map(e=>{const r=evRead(e);return `<div class="arrival-item"><span class="ev-no">증${list.indexOf(e)+1}</span><div><span class="eyebrow">증거 접수</span><strong>${esc(e.title)}</strong><small>${esc(e.sub)}</small></div><button class="${r?'':'primary'}" data-open-ev="${e.id}">${r?'다시 보기':'열람하기'}</button></div>`}).join('')}</section>`}
+const v5RenderCourtQuestions=renderCourtQuestions;
+renderCourtQuestions=()=>renderArrivals()+v5RenderCourtQuestions();
+const v5RenderCourt=renderCourt;
+renderCourt=()=>{let h=v5RenderCourt();const bl=courtBlocker();if(bl)h=h.replace(/<button class="primary" data-action="next">[\s\S]*?<\/button>/,()=>`<button class="primary blocked" data-action="next">${esc(bl[0])} ↑</button>`);return h.replace(/(<button data-chapter="\d+" disabled[^>]*><b>0\d<\/b><span>)[^<]*(<\/span>)/g,(m,a,b)=>a+'· · ·'+b)};
+const v5Advance=advanceCourt;
+advanceCourt=()=>{const bl=courtBlocker();if(bl){toast(bl[0]+'.');document.querySelector(bl[1])?.scrollIntoView({behavior:'smooth',block:'center'});return}const before=state.stage,prevMax=state.maxStage;v5Advance();if(state.stage!==before&&state.stage>prevMax){const now=arrivedEvidence().filter(e=>e.at()===state.stage);if(now.length)toast(`증거 접수 · ${now.map(e=>e.title).join(', ')}`)}};
+
+// The evidence file: a numbered list that grows as the trial goes on.
+function renderLocker(){const list=arrivedEvidence(),read=list.filter(evRead).length;return heading('증거 파일','공판에서 접수된 순서대로 쌓입니다. 새 자료부터 열람해 보세요.')+`<div class="locker-tools"><button data-tab="board">심증 보드</button><button data-tab="notes">나의 메모</button>${state.maxStage>=6?'<button data-tab="events">공판 기록</button>':''}</div><p class="tiny muted">열람 ${read} / 접수 ${list.length}</p><ol class="locker">${list.map((e,n)=>`<li><button class="ev-card ${evRead(e)?'':'unread'}" data-open-ev="${e.id}"><span class="ev-no">증${n+1}</span><span class="ev-body"><strong>${esc(e.title)}</strong><small>${esc(e.sub)} · 「${esc(STAGES[e.at()].title)}」에서 접수</small></span><span class="ev-state">${evRead(e)?'열람함':'새 자료'}</span></button></li>`).join('')}</ol><div class="notice">${state.maxStage>=25?'공판의 자료 접수가 끝났습니다.':'공판이 진행되면 새 자료가 이곳에 차례로 쌓입니다.'}</div><button class="full" data-tab="court" style="margin-top:12px">← 공판으로 돌아가기</button>`}
+renderNav=()=>{const list=arrivedEvidence(),unread=list.filter(e=>!evRead(e)).length,[rn,rt]=restorationCount(),item=(tab,title,sub,ic)=>`<button class="navitem ${state.tab===tab?'active':''}" data-tab="${tab}">${icon(ic)}<span><strong>${title}</strong><small>${sub}</small></span></button>`;
+ $('sideNav').innerHTML=item('court','공판 진행',esc(STAGES[state.stage].title),'court')+item('board','심증 보드',`증거 연결 · 11분 복원 ${rn}/${rt}`,'note')+item('notes','나의 메모','쟁점과 생각을 기록','note')+(state.maxStage>=6?item('events','공판 기록','이의 · 정정 · 결정','file'):'')+`<button class="nav-group ${state.tab==='locker'?'active':''}" data-tab="locker"><strong>증거 파일</strong><span class="tag">${list.length}건${unread?` · 새 ${unread}`:''}</span></button><ol class="ev-list">${list.map((e,n)=>`<li><button class="ev-item ${evActive(e)?'active':''} ${evRead(e)?'':'unread'}" data-open-ev="${e.id}"><b>증${n+1}</b><span>${esc(e.title)}</span>${evRead(e)?'':'<i>새 자료</i>'}</button></li>`).join('')}</ol><p class="ev-next">${state.maxStage>=25?'공판의 자료 접수가 끝났습니다.':'공판이 진행되면 새 자료가 접수됩니다.'}</p>`;
+ $('mobileRecords').innerHTML=`증거 파일${unread?` <span class="dot" aria-label="새 자료 ${unread}건">${unread}</span>`:''}`;renderSteps()};
+updateCounts=()=>{const list=arrivedEvidence(),n=list.filter(evRead).length;$('readCount').textContent=`${n} / ${list.length}`;$('readProgress').style.width=(list.length?n/list.length*100:0)+'%';$('characterCount').textContent=(state.order.length+state.reason.length+state.sentence.length)+'자'};
+const v5Footer=footer;
+footer=id=>v5Footer(id)+(String(id).startsWith('video_')||id==='parking'?'':'<button class="full back-court" data-tab="court">← 공판으로 돌아가기</button>');
+const v5RenderCenter=renderCenter;
+renderCenter=()=>{ensurePlay();if(state.tab==='locker'){clearInterval(typeTimer);$('center').innerHTML=renderLocker();updateCounts();renderNav();return}
+ const evIds=['message','forensic','access'];if(state.tab==='evidence'&&!evArrived(evIds[state.evidence])){const k=evIds.findIndex(evArrived);if(k>=0)state.evidence=k}
+ v5RenderCenter();const c=$('center');
+ if(state.tab==='evidence')c.querySelectorAll('[data-evidence]').forEach(b=>{if(!evArrived(evIds[+b.dataset.evidence]))b.remove()});
+ c.querySelectorAll('[data-supplement]:disabled,[data-video-doc]:disabled').forEach(b=>b.remove());
+ renderNav()};
+const v5SetTab=setTab;
+setTab=tab=>{v5SetTab(tab);if(tab==='court'&&state.tab==='court'){const bl=courtBlocker();if(bl)document.querySelector(bl[1])?.scrollIntoView({behavior:'instant',block:'center'})}};
+$('mobileRecords').onclick=()=>setTab('locker');
+
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+ if(d.openEv){openEvidence(d.openEv);return}
+ if(d.pick===undefined||state.sealed)return;const p=ensurePlay();
+ if(d.pickKind==='issue'){const i=issueAt();if(i?.id!==d.pickOwner||state.maxStage>i.stage||p.issues[i.id])return;p.drafts[i.id]??={};p.drafts[i.id].card=d.pick}
+ if(d.pickKind==='belief'){const c=checkpointAt();if(c?.id!==d.pickOwner||p.beliefs[c.id])return;p.beliefDrafts[c.id]??={confidence:3};p.beliefDrafts[c.id].card=d.pick}
+ if(d.pickKind==='confront'){if(!confrontPending())return;p.confrontDraft=d.pick}
+ save();renderCenter()});
 $('entranceImage').src=COURT;$('welcomeModal').addEventListener('cancel',e=>e.preventDefault());populate();if(prior?.started){$('judgeName').value=String(prior.name||'');$('resumeBtn').classList.remove('hidden')}if(!storageAvailable)$('saveState').textContent='자동저장 불가';$('welcomeModal').showModal();
 </script>
 </body></html>
