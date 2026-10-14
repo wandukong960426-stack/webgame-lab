@@ -12,6 +12,21 @@
 
 ## Handoff record
 
+### 11분의 공백 시각 연출 보강
+
+- 담당 AI: Claude
+- 목표: 사용자가 올린 추리형 재판 게임 `11분의 공백` 단일 HTML 검수본의 디자인·시각 요소 보강
+- 브랜치: `claude/detective-trial-game-design-s8p8e0`
+- PR: 아직 없음 (사용자 요청 시 생성)
+- 변경 파일: `prototypes/eleven-minute-gap/index.html`, `prototypes/eleven-minute-gap/README.md`, `docs/AI_HANDOFF.md`
+- 구현 결과: 첫 커밋에 원본 파일을 그대로 넣고, 다음 커밋에서 화자 초상·진영 색 이름표, 발언자 카메라, 타자 효과, 장 제목 카드, 서막 CCTV 공백·119 녹취 연출, 증거 영상 오버레이, 증거 확보·모순·시각 보정·결정적 장면·선고 피드백, 헤더 핵심 증거 표시, 입장·도면·시계·판결 화면 장식을 추가. 게임 로직·저장 키는 그대로이며 `render()` 끝의 `decorate()` 호출 하나만 기존 코드에 추가
+- 검증 명령과 결과: Playwright(Chromium)로 1440×900·390×844에서 입장부터 후일담까지 유죄·무죄 각각 자동 완주(88화면, 콘솔 오류 0), 1280×720·1920×1080·820×1180 개별 화면, 모션 줄이기(OS·게임 설정) 확인, 이력 이동·숫자키·핵심 증거 버튼 확인. `npm install`·`npm run typecheck`·`npm run build`·`npm run smoke`(17개 항목) 모두 통과. 검수본 파일은 Next.js 빌드 대상이 아니므로 앱 결과에는 영향 없음. 렌더 비용: 증거 비교 화면 렌더 HTML 814KB → 4KB, 렌더 8.6ms → 0.5ms(헤드리스 측정)
+- 모바일·PC 확인: 헤드리스 Chromium 화면 캡처로 확인. 실기기(iOS Safari·Android Chrome) 미확인
+- 확인하지 못한 항목: 실기기 터치 체감, Google Fonts 실제 로딩(검증 환경에서 외부 글꼴 차단 가능), Safari의 `color-mix()`·`:has()` 미지원 구버전 표시
+- 위험·롤백: `prototypes/` 폴더는 Next.js 빌드·배포 대상이 아니므로 운영 영향 없음. 되돌릴 때는 시각 연출 커밋만 revert하면 원본 검수본으로 돌아감
+- 다음 담당자가 할 일: 사용자가 실제 브라우저로 플레이해 연출 강도(카메라 확대, 타자 속도, 피드백 길이) 피드백을 주면 조정. 이 게임을 딴짓모아 Next.js 앱에 정식 편입할지는 별도 결정 필요
+- 배포 상태: 구현됨 (병합·Preview·공식 도메인 반영 없음)
+
 ### Claude GitHub 연결 확인
 
 - 담당 AI: Claude
