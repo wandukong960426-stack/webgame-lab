@@ -12,6 +12,21 @@
 
 ## Handoff record
 
+### 추리 재판 게임 표준 지정 반영
+
+- 담당 AI: Claude
+- 목표: 사용자가 표준으로 지정한 사건 002 v2.4 검수본(`case002-review.html`)과 인수인계(`case002-claude-handoff.md`)를 저장소 규칙으로 기록
+- 브랜치: `claude/detective-trial-game-design-s8p8e0`
+- PR: 아직 없음 (사용자 요청 시 생성)
+- 변경 파일: `docs/TRIAL_GAME_STANDARD.md`(신규), `docs/TRIAL_CASE002_HANDOFF.md`(원문 그대로), `prototypes/case-002-same-room/case002-review.html`(원문 그대로), `prototypes/case-002-same-room/README.md`, `CLAUDE.md`, `docs/AI_HANDOFF.md`
+- 구현 결과: 게임 코드 변경 없음. 표준 파일 보관, 작업 규칙 정리, CLAUDE.md 세션 체크리스트와 표준 요약 추가. 아래 사건 002·001 Claude 시험본 기록은 표준 이전 산출물로, 기준이 아님
+- 검증 명령과 결과: 표준 HTML SHA256이 원문 값과 일치. 헤드리스 Chromium 1440×900 자동 진행(입정 → 대조 3개 → 선고 → 복기) 페이지 오류 0, 외부 요청 0, 검수 모드·검수 저장 키 확인
+- 모바일·PC 확인: 실제 브라우저·실기기 NOT TESTED
+- 확인하지 못한 항목: 인수인계 8장의 NOT TESTED 항목 전부(실브라우저 잘림·겹침, 실기기 터치·전체화면, 실제 회원 로그인·적립·칭호·커뮤니티), Sites 소스(이 저장소에 없음)
+- 위험·롤백: 문서·참조 파일만 추가. revert로 되돌림
+- 다음 담당자가 할 일: 추리 재판 작업 전 `docs/TRIAL_GAME_STANDARD.md` 확인. 사건 001 시험본의 Google Fonts 외부 링크는 표준 형식과 어긋나므로 다음 수정 때 제거 검토
+- 배포 상태: 구현 안 됨(문서 반영만)
+
 ### 사건 002 「같은 방, 다른 진술」 연출을 사건 001 index.html 수준으로 보강
 
 - 담당 AI: Claude
