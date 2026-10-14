@@ -12,6 +12,21 @@
 
 ## Handoff record
 
+### 사건 002 「같은 방, 다른 진술」 연출을 사건 001 index.html 수준으로 보강
+
+- 담당 AI: Claude
+- 목표: 사용자가 올린 미완성 사건 002(`11.html`, 법정 플레이판 v2.2)를 이 채팅에서 만든 사건 001 `index.html`처럼 업데이트
+- 브랜치: `claude/detective-trial-game-design-s8p8e0`
+- PR: 아직 없음 (사용자 요청 시 생성)
+- 변경 파일: `prototypes/case-002-same-room/index.html`, `prototypes/case-002-same-room/README.md`, `docs/AI_HANDOFF.md`
+- 구현 결과: 첫 커밋에 원본을 그대로 넣고, 다음 커밋에서 인물 초상 빈칸 버그 수정(PNG 초상 시트 → WebP), 진영 색, 발언자 카메라, 타자 효과, 장 제목 카드, 모순·명령·선고 연출, 경고 흔들림, 상단 대조 표시, 입정·CCTV·판결 화면 장식, 이미지 Blob URL 변환을 추가. 사건 진행·진상·저장 키는 그대로
+- 검증 명령과 결과: Playwright(Chromium)로 1440×900 유죄, 390×844 무죄 경로를 입정부터 복기·진상까지 자동 완주(대조 3개 오답 1회 포함, 콘솔 오류 0). 원본도 같은 경로로 완주해 비교. 모션 줄이기, 지난 장면 열람, 타자 효과 건너뛰기 확인. `npm run typecheck`·`npm run build`·`npm run smoke` 모두 통과. 파일 3.36MB → 0.50MB, 법정 화면 렌더 HTML 108KB → 3KB
+- 모바일·PC 확인: 헤드리스 Chromium 화면 캡처로 확인. 실기기 미확인
+- 확인하지 못한 항목: 실기기 터치 체감, Google Fonts 실제 로딩, 구버전 Safari의 `color-mix()`·`mask-composite` 표시
+- 위험·롤백: `prototypes/` 폴더는 Next.js 빌드·배포 대상이 아님. 시각 연출 커밋만 revert하면 원본으로 돌아감(단 원본은 초상이 비어 보임)
+- 다음 담당자가 할 일: 사용자 실기기 플레이 피드백 반영. 공식 사이트에 올릴 경우 1.html 같은 실행 페이지와 `trial-assets/` 경로는 별도 결정
+- 배포 상태: 구현됨 (병합·Preview·공식 도메인 반영 없음)
+
 ### 11분의 공백 시각 연출 보강
 
 - 담당 AI: Claude
