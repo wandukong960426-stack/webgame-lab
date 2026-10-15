@@ -114,6 +114,7 @@
 | `prototypes/case-002-same-room/case002-review.html` | **표준.** v2.4 기능 보강본, 미배포 |
 | `docs/TRIAL_CASE002_HANDOFF.md` | **표준.** 인수인계 원문 |
 | `prototypes/case-002-same-room/index.html` | 2026-10-14 Claude 시험본(v2.2 + 시각 연출). v2.4가 이 위에 만들어졌다. 기준 아님 |
+| `prototypes/case-003-erased-statement/case003-review.html` | 2026-10-15 Claude 사건 003 보완 검수본(이 표준 적용). 미배포. 원본은 같은 폴더 `case003-original.html` |
 | `prototypes/eleven-minute-gap/index.html` | 2026-10-14 Claude 사건 001 시각 연출 시험본. 기준 아님. Google Fonts 외부 링크가 있어 3장 형식과 어긋난다 |
 
 2026-10-15 이 저장소에서 확인한 것: 기준 실행본 SHA256 일치. 헤드리스 Chromium(1440×900)으로 입정부터 선고·복기까지 자동 진행 시 페이지 오류 0, 외부 요청 0, `data-release-mode="review"`, 저장 키 `ttanjitmoa-court-002-v2-review`, 검사 발언 앞 “존경하는 ○○ 재판장님.” 호명, 재판장 발언 컨트롤 표시를 확인했다. 실제 브라우저·실기기·회원 경로는 NOT TESTED다.
