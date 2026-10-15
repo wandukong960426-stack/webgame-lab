@@ -1,0 +1,84 @@
+{
+  "target": "case003-final-review.html",
+  "engine": "jsdom 26.1.0 (DOM only; not browser QA)",
+  "passed": 19,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "Original narrative, evidence, choices, tasks, verdict and epilogues unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "Basic ending via UI, incorrect choices repaired, later extended ending preserves sealed judgment",
+      "result": "PASS"
+    },
+    {
+      "name": "Extended ending via UI and completed save reload",
+      "result": "PASS"
+    },
+    {
+      "name": "Judge entry, personal address, fixed prosecutor-right / defense-left",
+      "result": "PASS"
+    },
+    {
+      "name": "Early lawyer answer does not reveal later sketch copy; late answer respects confirmed provenance",
+      "result": "PASS"
+    },
+    {
+      "name": "Investigator does not concede source-puzzle solution before comparison",
+      "result": "PASS"
+    },
+    {
+      "name": "All six evidence task selections survive close / reopen / JSON round trip / reload",
+      "result": "PASS"
+    },
+    {
+      "name": "Evidence modal returns to in-progress comparison with choices intact",
+      "result": "PASS"
+    },
+    {
+      "name": "Earlier statements are read-only and menu return goes to current hearing",
+      "result": "PASS"
+    },
+    {
+      "name": "All six completed evidence responses and repaired choice responses carry speaker portraits",
+      "result": "PASS"
+    },
+    {
+      "name": "Storage-blocked play still offers and invokes progress export",
+      "result": "PASS"
+    },
+    {
+      "name": "Original save migrates read-only and new save rejects explicit foreign case IDs",
+      "result": "PASS"
+    },
+    {
+      "name": "Malformed optional draft fields are sanitized; invalid completed saves reopen deliberation",
+      "result": "PASS"
+    },
+    {
+      "name": "Direct question / reply drafts, topic, escaped text, respondent portrait and reload",
+      "result": "PASS"
+    },
+    {
+      "name": "File-import confirmation / cancellation / invalid-file protection and new-game reset",
+      "result": "PASS"
+    },
+    {
+      "name": "Repeated judge speech retains early core testimony",
+      "result": "PASS"
+    },
+    {
+      "name": "Modal Tab / Shift+Tab loop and Escape restores invocation focus (DOM)",
+      "result": "PASS"
+    },
+    {
+      "name": "Embedded images initialize once as Blob URLs and retain data-URL fallback",
+      "result": "PASS"
+    },
+    {
+      "name": "No future issues in pips/findings; review markers and embedded resources only",
+      "result": "PASS"
+    }
+  ]
+}

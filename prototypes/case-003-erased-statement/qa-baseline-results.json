@@ -1,0 +1,94 @@
+{
+  "target": "case003-review.html",
+  "engine": "jsdom 26.1.0 (DOM only; not browser QA)",
+  "passed": 9,
+  "failed": 10,
+  "checks": [
+    {
+      "name": "Original narrative, evidence, choices, tasks, verdict and epilogues unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "Basic ending via UI, incorrect choices repaired, later extended ending preserves sealed judgment",
+      "result": "PASS"
+    },
+    {
+      "name": "Extended ending via UI and completed save reload",
+      "result": "PASS"
+    },
+    {
+      "name": "Judge entry, personal address, fixed prosecutor-right / defense-left",
+      "result": "PASS"
+    },
+    {
+      "name": "Early lawyer answer does not reveal later sketch copy; late answer respects confirmed provenance",
+      "result": "FAIL",
+      "detail": "The input was expected to not match the regular expression /사본|첨부 번호/. Input:\n\n'민서 재판장님, 최초 진술은 원본이 아니라 별건 기록에 붙은 사본입니다. 사본이 원본과 같은지, 누가 옮겨 적었는지는 아직 단정할 수 없습니다.'\n"
+    },
+    {
+      "name": "Investigator does not concede source-puzzle solution before comparison",
+      "result": "FAIL",
+      "detail": "The input was expected to not match the regular expression /충분히 대조하지 못/. Input:\n\n'민서 재판장님, 강태성의 자백은 직접 들었지만, 그 내용이 실제 경험인지 보도에서 얻은 정보인지 당시 충분히 대조하지 못했습니다. 직접 물증도 확보하지 못했습니다.'\n"
+    },
+    {
+      "name": "All six evidence task selections survive close / reopen / JSON round trip / reload",
+      "result": "FAIL",
+      "detail": "photo: reopen\n+ actual - expected\n\n+ '{\"id\":\"photo\",\"answers\":{},\"order\":[],\"mode\":\"both\",\"route\":\"\"}'\n- '{\"id\":\"photo\",\"answers\":{\"photoNo\":\"6\",\"conclusion\":\"leak\"},\"order\":[],\"mode\":\"both\",\"route\":\"\"}'\n"
+    },
+    {
+      "name": "Evidence modal returns to in-progress comparison with choices intact",
+      "result": "PASS"
+    },
+    {
+      "name": "Earlier statements are read-only and menu return goes to current hearing",
+      "result": "FAIL",
+      "detail": "The expression evaluated to a falsy value:\n\n  assert.ok(!h.w.document.querySelector('.is-history'))\n"
+    },
+    {
+      "name": "All six completed evidence responses and repaired choice responses carry speaker portraits",
+      "result": "FAIL",
+      "detail": "photo"
+    },
+    {
+      "name": "Storage-blocked play still offers and invokes progress export",
+      "result": "FAIL",
+      "detail": "missing #menuExport"
+    },
+    {
+      "name": "Original save migrates read-only and new save rejects explicit foreign case IDs",
+      "result": "FAIL",
+      "detail": "Missing expected exception."
+    },
+    {
+      "name": "Malformed optional draft fields are sanitized; invalid completed saves reopen deliberation",
+      "result": "FAIL",
+      "detail": "Cannot read properties of undefined (reading 'time')"
+    },
+    {
+      "name": "Direct question / reply drafts, topic, escaped text, respondent portrait and reload",
+      "result": "PASS"
+    },
+    {
+      "name": "File-import confirmation / cancellation / invalid-file protection and new-game reset",
+      "result": "FAIL",
+      "detail": "The input did not match the regular expression /유효한 진행 기록이 아닙니다/. Input:\n\n'진행 기록을 불러왔습니다.'\n"
+    },
+    {
+      "name": "Repeated judge speech retains early core testimony",
+      "result": "PASS"
+    },
+    {
+      "name": "Modal Tab / Shift+Tab loop and Escape restores invocation focus (DOM)",
+      "result": "PASS"
+    },
+    {
+      "name": "Embedded images initialize once as Blob URLs and retain data-URL fallback",
+      "result": "FAIL",
+      "detail": "The input did not match the regular expression /^url\\(\"blob:/. Input:\n\n''\n"
+    },
+    {
+      "name": "No future issues in pips/findings; review markers and embedded resources only",
+      "result": "PASS"
+    }
+  ]
+}

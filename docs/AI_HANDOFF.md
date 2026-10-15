@@ -12,6 +12,19 @@
 
 ## Handoff record
 
+### 사건 003 Codex 독립 검수 및 별도 수정본
+
+- 담당 AI: Codex
+- 브랜치: `codex/case003-final-qa` (Claude 기준 `2bf7217c63b1d20604158de17f7168c724fc7e17`)
+- PR: 없음. 병합·배포 없음.
+- 변경 파일: 사건 003 `case003-final-review.html`, `FINAL_QA.md`, `qa-final-results.json`, `qa-baseline-results.json`, README 안내, `scripts/qa-case003.cjs`, 이 장부
+- 구현: 추가 질문의 후반 단서 선노출·부정확한 사본 설명 수정, 6개 대조 초안 저장, 지난 발언 메뉴 복귀, 대조·재질문 후속 응답 초상, 저장 차단 시 JSON 내보내기, 명시적 다른 사건 저장 거부, 이미지 일회 Blob 초기화. 원본·Claude 검수본·본편 서사와 결말 조건 유지.
+- 검증: 원본 및 기준본 크기·SHA256 일치. 본편 데이터 및 이미지 바이트 동일. jsdom 26.1.0 19개 검사 PASS/0 FAIL; 기존 Claude 기준본에는 같은 검사 PASS 9/FAIL 10(중복 결함·신규 계약 검사 포함). typecheck/build/HTTP smoke 17항목 PASS.
+- 미검증: 실제 브라우저 렌더링·PC/모바일 잘림·터치·키보드·전체화면·소리·실제 다운로드 및 회원 연동. DOM 검사와 이미지 디코딩은 이를 대신하지 않음.
+- 다음 작업: `FINAL_QA.md`의 실기기 경로 검수 및 사용자 확인. 운영 편입 시 Sites 구현과 회원 서버를 별도로 통합. 이 Next.js 저장소로 운영 사이트를 덮어쓰지 않음.
+- 롤백: 추가 검수본/QA 문서와 안내 커밋만 revert. 기존 파일과 운영본에 영향 없음.
+- 상태: 구현됨 / 자동검증 통과 / 병합 안 됨 / 미배포
+
 ### 사건 003 「지워진 첫 진술」 검수본 보완
 
 - 담당 AI: Claude
