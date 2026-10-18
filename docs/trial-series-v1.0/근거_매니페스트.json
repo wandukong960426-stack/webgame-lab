@@ -1,0 +1,122 @@
+{
+  "document_version": "1.0",
+  "created_date": "2026-10-18",
+  "language": "ko",
+  "scope": "문서 인수인계. 게임 수정·배포 없음.",
+  "baseline": {
+    "site_url": "https://ttanjitmoa.com",
+    "successful_deployed_site_version": "v189",
+    "deployed_at_kst": "2026-10-15T02:41:21+09:00",
+    "commit": "724c698729f494d27795332cd12aeaa192bdc60d",
+    "case001_last_changed_site_version": "v188",
+    "case001_same_in_versions": [
+      "v188",
+      "v189",
+      "v190"
+    ],
+    "latest_saved_v190_deployed": false,
+    "live_browser_tested": false
+  },
+  "interview": {
+    "Q1": {
+      "response": null,
+      "fallback": "핵심 퍼즐 모두 해결 후 선고",
+      "user_confirmed": false
+    },
+    "Q2": {
+      "response": null,
+      "fallback": "유무죄 선택과 판단 이유, 형량 미포함",
+      "user_confirmed": false
+    },
+    "Q3": {
+      "response": null,
+      "question": "2편에서 가장 빠졌다고 느낀 실제 장면·기능"
+    }
+  },
+  "feature_checklist": {
+    "count": 67,
+    "purpose": "후속 사건 검수 양식. 기준판의 통과 수치가 아님.",
+    "initial_test_status": "NOT TESTED"
+  },
+  "reference_archive": {
+    "path": "11-minute-gap_deployed-v188_in-site-v189.zip",
+    "bytes": 10389666,
+    "sha256": "61c98b0222382423d803788c7b1eae0a18a7653a84be2700707fd111c5fbb3ea",
+    "included_in_document_bundle": false,
+    "kind": "관련 소스 발췌. 전체 사이트 또는 독립 실행 게임 아님."
+  },
+  "source_files": [
+    {
+      "path": "public/trial-assets/11-minute-gap/index.html",
+      "bytes": 228562,
+      "sha256": "d9a5420e2364009961d1084a263ee2ee43cb8d843211a0b0117e87264e09110d"
+    },
+    {
+      "path": "public/trial-assets/11-minute-gap/production.mjs",
+      "bytes": 2214,
+      "sha256": "7c194b625d37e6db948465e74e1c0c0368ffc35cef8b17fa05bb3cbedfbf3403"
+    },
+    {
+      "path": "public/trial-assets/11-minute-gap/production.css",
+      "bytes": 1617,
+      "sha256": "b34cfa2a5e3780e4912c0a0d32ad1b95ac161b40c7cb1b16773b4ee257be6bad"
+    },
+    {
+      "path": "public/trial-assets/same-room-different-statements/index.html",
+      "bytes": 251235,
+      "sha256": "ac0c44f4589879b0eb4feda45ee2ba39b35bcd667e1979c8f185f3cd26d89689"
+    },
+    {
+      "path": "public/trial-assets/member-rewards.mjs",
+      "bytes": 7967,
+      "sha256": "39057b4bd6eef8acccfd99fa96ed09a6fe967e217ab5e16233fc8a490580f962"
+    },
+    {
+      "path": "public/member-titles.mjs",
+      "bytes": 5787,
+      "sha256": "b7cdfa626ef414eb1e1917644f3153506068bbb971a980b640ac177aa2b1d74c"
+    },
+    {
+      "path": "docs/GAME_QUALITY_GATE.md",
+      "bytes": 3323,
+      "sha256": "3b773d9ab486a195fb5bf61fcbc65dc38a11e8530f23215574926adbdce53f6a"
+    },
+    {
+      "path": "tests/trial-narrative-dom.test.mjs",
+      "bytes": 12348,
+      "sha256": "84727fb05bb8c8cd325ddf80474d66acae11c67fdb0076f8e6a49972572e25e6"
+    },
+    {
+      "path": "tests/trial-member-rewards.test.mjs",
+      "bytes": 5736,
+      "sha256": "ad3f48ad44242b195be13eaf50d3b4c23cfaa0d058fd35e4c35d2a826f2a17da"
+    }
+  ],
+  "document_files": [
+    {
+      "path": "기능_계승_검수표.csv",
+      "bytes": 10586,
+      "sha256": "f8efd8dac8b1a25004068aee6edc343f151639d47814250851c0bc3df56fbec2"
+    },
+    {
+      "path": "딴짓모아_추리재판_시리즈_인수인계_v1.0.md",
+      "bytes": 45539,
+      "sha256": "ab72fe1da88484e661cbefe7937629a09a0706a64202855cb7328d74e6d6924b"
+    },
+    {
+      "path": "새_사건_설계_템플릿.md",
+      "bytes": 8599,
+      "sha256": "9bb09771b81121de769615a54bf313fa8362c46501c6645176209f1b8b6f2773"
+    },
+    {
+      "path": "새_채팅_시작_프롬프트.txt",
+      "bytes": 4525,
+      "sha256": "547c4176c22b9fae7f73046846173ce18998650f00737c49e42df789ba714d5b"
+    },
+    {
+      "path": "읽어주세요.txt",
+      "bytes": 1702,
+      "sha256": "3278150ab65bacef8d477b7d1aebdcbad7284e62572b371317cb83193027c8c1"
+    }
+  ]
+}
