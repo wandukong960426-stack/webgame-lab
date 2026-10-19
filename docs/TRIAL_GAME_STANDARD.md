@@ -169,6 +169,7 @@
 | `prototypes/case-002-same-room/case002-review.html` | 사건 002 v2.4 독립 검수본(1~10장 기준) |
 | `docs/TRIAL_CASE002_HANDOFF.md` | 사건 002 인수인계 원문. 배포 상태 표기는 작성 시점 정보 |
 | `prototypes/case-002-same-room/index.html` | 2026-10-14 Claude 시험본(v2.2 + 시각 연출). v2.4가 이 위에 만들어졌다. 기준 아님 |
+| `prototypes/case-004-unrescued-night/case004-review.html` | 2026-10-19 Claude 사건 004 보완 검수본(0장 초석 기준). 미배포. 원본은 같은 폴더 `case004-original.html`(사이트 v194 단일 HTML) |
 | `prototypes/case-003-erased-statement/case003-review.html` | 2026-10-15 Claude 사건 003 보완 검수본(사건 002 v2.4 표준 적용, 0장 초석 이전). 미배포. 초석 대조 결과와 부족한 점은 같은 폴더 README. 원본은 `case003-original.html` |
 | `prototypes/eleven-minute-gap/index.html` | 2026-10-14 Claude 사건 001 시각 연출 시험본. 기준 아님. Google Fonts 외부 링크가 있어 3장 형식과 어긋난다 |
 
