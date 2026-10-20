@@ -12,6 +12,21 @@
 
 ## Handoff record
 
+### 사건 006 「여섯 개의 자백」 검수본 보완
+
+- 담당 AI: Claude
+- 목표: 사용자가 전달한 사건 006 단일 HTML의 부족한 부분을 기본 초석 기준으로 확인하고 보완
+- 브랜치: `claude/detective-trial-game-design-s8p8e0`
+- PR: 아직 없음 (사용자 요청 시 생성)
+- 변경 파일: `prototypes/case-006-six-confessions/case006-original.html`(원본 그대로), `prototypes/case-006-six-confessions/case006-review.html`(신규 검수본), `prototypes/case-006-six-confessions/README.md`, `docs/TRIAL_GAME_STANDARD.md`(10장 표), `docs/AI_HANDOFF.md`
+- 구현 결과: 원본에는 사건 004 검수본(`53e0158`) 개선이 이미 옮겨져 있어 기능 점검 23항목 중 19개가 통과했다. 판사석 착석·개정 버튼, 검사의 이름 호칭, PC 피고인 이름표 줄바꿈, 모바일에서 막 카드와 증거 접수 표시 겹침, 초상 윗줄 비침을 고치고 검수본 표시와 별도 저장 키(원본 키 이어받기)를 적용. 실제 사건 기반이라 선고 뒤 속마음 장면은 추가하지 않음(원본 방침 유지)
+- 검증 명령과 결과: 헤드리스 Chromium으로 판결 조합 4가지 완주(1440×900·1366×768·390×844·1280×800 동작 줄이기, 오답·힌트 포함, 콘솔 오류 0, 외부 요청 0). 기능 점검 28항목 PASS(1440×900·390×844). 8개 화면 크기 가로 스크롤·이름표 겹침 없음. `npm run typecheck`·`npm run build`·`npm run smoke` 통과
+- 모바일·PC 확인: 헤드리스 화면 캡처로만 확인. 실제 브라우저·실기기 NOT TESTED
+- 확인하지 못한 항목: 실브라우저·실기기, 화면낭독기, 회원 적립·칭호, 출처 링크 접속과 실제 사건 사실관계 대조, 사이트 운영판
+- 위험·롤백: `prototypes/` 폴더는 빌드·배포 대상이 아님. 검수본 커밋만 revert하면 원본만 남음
+- 다음 담당자가 할 일: 사용자 실기기 피드백 반영. 운영판 반영은 사이트 소스 `public/trial-assets/six-confessions/`에 같은 수정을 적용하며 이 HTML을 덮어쓰지 않는다
+- 배포 상태: 구현됨 (병합·Preview·공식 도메인 반영 없음)
+
 ### 사건 004 「구하지 않은 밤」 검수본 보완
 
 - 담당 AI: Claude
